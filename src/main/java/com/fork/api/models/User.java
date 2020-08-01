@@ -3,7 +3,7 @@ package com.fork.api.models;
 import com.fork.api.Config;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -31,7 +31,10 @@ public class User {
         this.subscribe_end_date = subscribe_end_date;
         this.signup_date = new Date((new java.util.Date()).getTime());
 
-        this.settings = null;
+        this.settings = new Settings(
+                this,
+                Config.BALANCE_PERCENT
+        );
     }
 
     public long getId() { return id; }

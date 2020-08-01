@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+dd
+</body>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script>
+    $.ajax({
+        type: "POST",
+        url: "/login",
+        data: {
+            login: "test1",
+            password: "test"
+        },
+        success: function(response) {
+            console.log(response);
+            console.log($.parseJSON(response));
+        },
+        error: function(response) {
+            console.log('ERROR: ' + response);
+            console.log($.parseJSON(response));
+        }
+    });
+</script>
+</html>
