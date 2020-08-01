@@ -12,5 +12,5 @@ public interface BookmakerRepos extends CrudRepository<Bookmaker, Long> {
     Bookmaker findById(long id);
 
     Bookmaker findByTitleOrLink(String title, String link);
-    List<Bookmaker> getAll();
+    List<Bookmaker> findAll();
 }

@@ -46,7 +46,7 @@ public class BookmakerController {
     ) {
         if(userRepos.findByToken(token) != null) {
 
-            List<Bookmaker> bookmakers = bookmakerRepos.getAll();
+            List<Bookmaker> bookmakers = bookmakerRepos.findAll();
             return new ResponseEntity<>(bookmakers, HttpStatus.OK);
         } else
             throw new InvalidTokenException();
