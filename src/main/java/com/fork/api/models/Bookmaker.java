@@ -20,7 +20,6 @@ public class Bookmaker {
         this.title = title;
         this.link = link;
 
-        this.accounts= null;
     }
 
     public long getId() { return id; }

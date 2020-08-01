@@ -45,4 +45,11 @@ public class LoginController {
             throw new UserNotFoundException();
     }
 
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(HttpSession session) {
+
+        session.invalidate();
+        return new ResponseEntity<>("ok", HttpStatus.OK);
+    }
+
 }

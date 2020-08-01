@@ -11,5 +11,6 @@ public interface UserRepos extends CrudRepository<User, Long> {
     List<User> findAll();
     User findById (long id);
     User findByLogin (String login);
+    User findByToken (String token);
 
 }
