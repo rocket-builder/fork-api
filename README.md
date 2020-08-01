@@ -1,5 +1,6 @@
 # fork-api
  spring restful api for fork bot
+  token is user password hash
  
  ## user
  ### get user by id
