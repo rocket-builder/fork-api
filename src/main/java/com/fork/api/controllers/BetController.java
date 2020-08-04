@@ -11,12 +11,18 @@ import com.fork.api.repos.UserRepos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.lang.module.ModuleDescriptor;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Set;
 
 @RestController
 public class BetController {
@@ -58,6 +64,48 @@ public class BetController {
                 betRepos.save(bet);
 
                 return new ResponseEntity<>(bet, HttpStatus.OK);
+            } else
+                throw new AccessDeniedException();
+        } else
+            throw new InvalidTokenException();
+    }
+
+    @GetMapping("/get.bets")
+    public ResponseEntity<List<Bet>> getBets(
+            @RequestParam String token
+    ) {
+
+        User userByToken = userRepos.findByToken(token);
+
+        if(userByToken != null) {
+
+            List<Bet> bets = new ArrayList<>();
+
+            userByToken.getBk_accounts().forEach(bkAccount -> {
+                bets.addAll(bkAccount.getBets());
+            });
+
+            bets.sort(Comparator.comparing(Bet::getId));
+
+            return new ResponseEntity<>(bets, HttpStatus.OK);
+        } else
+            throw new InvalidTokenException();
+    }
+
+    @GetMapping("/get.betsFromSingleBkAccount")
+    public ResponseEntity<Set<Bet>> getBetsSingle(
+            @RequestParam String token,
+            @RequestParam long bk_account_id
+    ) {
+
+        User userByToken = userRepos.findByToken(token);
+
+        if(userByToken != null) {
+
+            BkAccount bkAccount = bkAccountRepos.findById(bk_account_id);
+            if(bkAccount.getUser().equals(userByToken)) {
+
+                return new ResponseEntity<>(bkAccount.getBets(), HttpStatus.OK);
             } else
                 throw new AccessDeniedException();
         } else

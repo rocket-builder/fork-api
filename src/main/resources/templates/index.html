@@ -16,11 +16,47 @@
 
 <button onclick="setBkAccBalance(6, 20000)">set bk acc balance</button>
 <button onclick="addBet()">addBet</button>
+<button onclick="getBets()">get all bets</button>
+<button onclick="getBetsSingle()">get single bk account bets</button>
 
 </body>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script>
-    
+    function getBetsSingle() {
+        $.ajax({
+            type: "GET",
+            url: "/get.betsFromSingleBkAccount",
+            data: {
+                token: "699679f38595e51ed155a181f3270c85",
+                bk_account_id: 6
+            },
+            success: function(response) {
+                console.log(response);
+                console.log($.parseJSON(response));
+            },
+            error: function(response) {
+                console.log('ERROR: ' + response);
+                console.log($.parseJSON(response));
+            }
+        });
+    }
+    function getBets() {
+        $.ajax({
+            type: "GET",
+            url: "/get.bets",
+            data: {
+                token: "699679f38595e51ed155a181f3270c85"
+            },
+            success: function(response) {
+                console.log(response);
+                console.log($.parseJSON(response));
+            },
+            error: function(response) {
+                console.log('ERROR: ' + response);
+                console.log($.parseJSON(response));
+            }
+        });
+    }
     function addBet() {
         $.ajax({
             type: "POST",
