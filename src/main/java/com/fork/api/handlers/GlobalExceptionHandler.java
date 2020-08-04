@@ -22,7 +22,7 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(new ApiError(
                 404, "No handler found for your request."
-        ), HttpStatus.NOT_FOUND);
+        ), HttpStatus.OK);
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
@@ -30,7 +30,7 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(new ApiError(
                 405, "Method not allowed."
-        ), HttpStatus.METHOD_NOT_ALLOWED);
+        ), HttpStatus.OK);
     }
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
@@ -38,7 +38,7 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(new ApiError(
                 400, ex.getMessage()
-        ), HttpStatus.BAD_REQUEST);
+        ), HttpStatus.OK);
     }
 
     @ExceptionHandler(LoginTakenException.class)
@@ -110,6 +110,14 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(new ApiError(
                 400, "Bk Account not founded :("
+        ), HttpStatus.OK);
+    }
+
+    @ExceptionHandler(BkAccountAlreadyExistsException.class)
+    public ResponseEntity<ApiError> bkAccountAlreadyExistsException(BkAccountAlreadyExistsException ex) {
+
+        return new ResponseEntity<>(new ApiError(
+                400, "Such Bk Account with this user and this bk already exists :("
         ), HttpStatus.OK);
     }
 

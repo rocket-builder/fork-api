@@ -5,25 +5,153 @@
     <title>Title</title>
 </head>
 <body>
-dd
+
+
+
+<button onclick="login()">login</button>
+<button onclick="logout()">logout</button>
+<button onclick="getAllBk()"> get all bk</button>
+<button onclick="addBk('parimatch', 'www.parimatch.com')">add bk</button>
+<button onclick="addBkAcc('www.parimatch.com')">add bk acc</button>
+
+<button onclick="setBkAccBalance(6, 20000)">set bk acc balance</button>
+<button onclick="addBet()">addBet</button>
+
 </body>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script>
-    $.ajax({
-        type: "POST",
-        url: "/login",
-        data: {
-            login: "test1",
-            password: "test"
-        },
-        success: function(response) {
-            console.log(response);
-            console.log($.parseJSON(response));
-        },
-        error: function(response) {
-            console.log('ERROR: ' + response);
-            console.log($.parseJSON(response));
-        }
-    });
+    
+    function addBet() {
+        $.ajax({
+            type: "POST",
+            url: "/add.bet",
+            data: {
+                token: "699679f38595e51ed155a181f3270c85",
+                bk_account_id: 6,
+                match_title: "some dota or cs match",
+                team: "some team",
+                coefficient: 2.3,
+                bet_sum: 500,
+                bet_date: "2020-08-04"
+            },
+            success: function(response) {
+                console.log(response);
+                console.log($.parseJSON(response));
+            },
+            error: function(response) {
+                console.log('ERROR: ' + response);
+                console.log($.parseJSON(response));
+            }
+        });
+    }
+    function getAllBk() {
+        $.ajax({
+            type: "GET",
+            url: "/get.bookmakers",
+            data: {
+                token: "token228"
+            },
+            success: function(response) {
+                console.log(response);
+                console.log($.parseJSON(response));
+            },
+            error: function(response) {
+                console.log('ERROR: ' + response);
+                console.log($.parseJSON(response));
+            }
+        });
+    }
+
+    function setBkAccBalance(acc_id, balance) {
+        $.ajax({
+            type: "POST",
+            url: "/user.setBkAccountBalance",
+            data: {
+                token: "699679f38595e51ed155a181f3270c85",
+                bk_account_id: acc_id,
+                balance: balance
+            },
+            success: function(response) {
+                console.log(response);
+                console.log($.parseJSON(response));
+            },
+            error: function(response) {
+                console.log('ERROR: ' + response);
+                console.log($.parseJSON(response));
+            }
+        });
+    }
+    function addBkAcc(url) {
+        $.ajax({
+            type: "POST",
+            url: "/user.addBkAccount",
+            data: {
+                bkUrl: url,
+                login: "bkLogin",
+                password: "bkPassword"
+            },
+            success: function(response) {
+                console.log(response);
+                console.log($.parseJSON(response));
+            },
+            error: function(response) {
+                console.log('ERROR: ' + response);
+                console.log($.parseJSON(response));
+            }
+        });
+    }
+    function addBk(title, link) {
+        $.ajax({
+            type: "POST",
+            url: "/add.bookmaker",
+            data: {
+                token: "token228",
+                title: title,
+                link: link
+            },
+            success: function(response) {
+                console.log(response);
+                console.log($.parseJSON(response));
+            },
+            error: function(response) {
+                console.log('ERROR: ' + response);
+                console.log($.parseJSON(response));
+            }
+        });
+    }
+
+    function login() {
+        $.ajax({
+            type: "POST",
+            url: "/login",
+            data: {
+                login: "test1",
+                password: "test"
+            },
+            success: function(response) {
+                console.log(response);
+                console.log($.parseJSON(response));
+            },
+            error: function(response) {
+                console.log('ERROR: ' + response);
+                console.log($.parseJSON(response));
+            }
+        });
+    }
+    function logout() {
+        $.ajax({
+            type: "POST",
+            url: "/logout",
+            data: {},
+            success: function(response) {
+                console.log(response);
+                console.log($.parseJSON(response));
+            },
+            error: function(response) {
+                console.log('ERROR: ' + response);
+                console.log($.parseJSON(response));
+            }
+        });
+    }
 </script>
 </html>

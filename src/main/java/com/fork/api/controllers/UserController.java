@@ -79,4 +79,25 @@ public class UserController {
         } else
             throw new UserNotFoundException();
     }
+
+    @PostMapping("/delete.user")
+    public ResponseEntity<String> deleteUser(
+            @RequestParam String token,
+            @RequestParam long user_id
+    ) {
+
+        User userAdmin = userRepos.findByToken(token);
+        if(userAdmin != null && userAdmin.getRole().equals(Role.ADMIN)) {
+
+            User userFromDb = userRepos.findById(user_id);
+            if(userFromDb != null) {
+
+                userRepos.delete(userFromDb);
+
+                return new ResponseEntity<>("ok", HttpStatus.OK);
+            } else
+                throw new UserNotFoundException();
+        } else
+            throw new InvalidTokenException();
+    }
 }

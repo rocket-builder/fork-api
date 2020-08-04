@@ -5,6 +5,7 @@ import com.fork.api.exceptions.InvalidTokenException;
 import com.fork.api.models.Bet;
 import com.fork.api.models.BkAccount;
 import com.fork.api.models.User;
+import com.fork.api.repos.BetRepos;
 import com.fork.api.repos.BkAccountRepos;
 import com.fork.api.repos.UserRepos;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,8 @@ public class BetController {
     UserRepos userRepos;
     @Autowired
     BkAccountRepos bkAccountRepos;
+    @Autowired
+    BetRepos betRepos;
 
     @PostMapping("/add.bet")
     public ResponseEntity<Bet> addBet(
@@ -52,8 +55,7 @@ public class BetController {
                         new SimpleDateFormat("yyyy-MM-dd").parse(bet_date)
                 );
 
-                bkAccount.getBets().add(bet);
-                bkAccountRepos.save(bkAccount);
+                betRepos.save(bet);
 
                 return new ResponseEntity<>(bet, HttpStatus.OK);
             } else

@@ -28,7 +28,7 @@ public class BkAccountController {
     BkAccountRepos bkAccountRepos;
 
     @PostMapping("/user.addBkAccount")
-    public ResponseEntity<User> addBkAccount(
+    public ResponseEntity<BkAccount> addBkAccount(
             @RequestParam String bkUrl,
             @RequestParam String login,
             @RequestParam String password,
@@ -40,19 +40,54 @@ public class BkAccountController {
             User user = userRepos.findById(
                     Long.parseLong(session.getAttribute("userId").toString())
             );
+
             if(user != null) {
 
                 Bookmaker bookmaker = bookmakerRepos.findByLink(bkUrl);
                 if(bookmaker != null) {
 
-                    user.getBk_accounts().add(
-                            new BkAccount(user, bookmaker, login, password)
-                    );
+                    BkAccount bkAccountFromDb = bkAccountRepos.findByLoginAndBookmaker(login, bookmaker);
+                    if(bkAccountFromDb == null) {
 
-                    userRepos.save(user);
-                    return new ResponseEntity<>(user, HttpStatus.OK);
+                        BkAccount bkAccount = new BkAccount(user, bookmaker, login, password);
+                        bkAccountRepos.save(bkAccount);
+
+                        return new ResponseEntity<>(bkAccount, HttpStatus.OK);
+                    } else
+                        throw new BkAccountAlreadyExistsException();
                 } else
                     throw new BookmakerNotFoundException();
+            } else
+                throw new UserNotFoundException();
+        } else
+            throw new AccessDeniedException();
+    }
+
+    @PostMapping("/user.deleteBkAccount")
+    public ResponseEntity<String> deleteBkAccount(
+            @RequestParam long bk_account_id,
+            HttpSession session
+    ) {
+        //check if user login
+        if(session.getAttribute("userId") != null) {
+
+            User user = userRepos.findById(
+                    Long.parseLong(session.getAttribute("userId").toString())
+            );
+
+            if(user != null) {
+
+                BkAccount bkAccountFromDb = bkAccountRepos.findById(bk_account_id);
+                if(bkAccountFromDb != null) {
+
+                    if(bkAccountFromDb.getUser().equals(user)) {
+
+                        bkAccountRepos.delete(bkAccountFromDb);
+                        return new ResponseEntity<>("ok", HttpStatus.OK);
+                    } else
+                        throw new AccessDeniedException();
+                } else
+                    throw new BkAccountNotFoundException();
             } else
                 throw new UserNotFoundException();
         } else

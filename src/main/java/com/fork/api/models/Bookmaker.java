@@ -1,9 +1,12 @@
 package com.fork.api.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
+@JsonIgnoreProperties({ "accounts" })
 public class Bookmaker {
 
     @Id

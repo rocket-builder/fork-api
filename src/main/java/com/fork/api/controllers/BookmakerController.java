@@ -41,7 +41,7 @@ public class BookmakerController {
     }
 
     @GetMapping("/get.bookmakers")
-    public ResponseEntity<List<Bookmaker>> getBookmakerById(
+    public ResponseEntity<List<Bookmaker>> getBookmakers(
             @RequestParam(value = "token") String token
     ) {
         if(userRepos.findByToken(token) != null) {
@@ -71,6 +71,27 @@ public class BookmakerController {
                 return new ResponseEntity<>(bookmaker, HttpStatus.OK);
             } else
                 throw new BookmakerAlreadyExistsException();
+        } else
+            throw new InvalidTokenException();
+    }
+
+    @PostMapping("/delete.bookmaker")
+    public ResponseEntity<String> deleteBookmaker(
+            @RequestParam String token,
+            @RequestParam String link
+    ) {
+
+        User user = userRepos.findByToken(token);
+        if(user != null && user.getRole().equals(Role.ADMIN)) {
+
+            Bookmaker bookmaker = bookmakerRepos.findByLink(link);
+            if(bookmaker != null) {
+
+                bookmakerRepos.delete(bookmaker);
+
+                return new ResponseEntity<>("ok", HttpStatus.OK);
+            } else
+                throw new BookmakerNotFoundException();
         } else
             throw new InvalidTokenException();
     }
