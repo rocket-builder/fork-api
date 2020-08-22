@@ -2,7 +2,7 @@
  java spring restful api for fork bot
  > token is user hash(login + hashed password)  
  > bot token is user token  
- > api host url appear later
+ > api host: https://cors-anywhere.herokuapp.com/fork-api.herokuapp.com/
  
  ## authorization
  ### login
@@ -32,10 +32,10 @@
  * params: token(string), user_id(long)
  * result: ok(string)
  ### user.setSettings
- > access only for user profile owner, only after login  
+ > access only for user profile owner
  > balance_percent is percent from balance who will use in every bet placement
  * method: POST
- * params: balance_percent(int)
+ * params: balance_percent(int), token(string)
  * result: user(object)
  ## bookmaker
  ### get.bookmaker
@@ -60,14 +60,14 @@
  * result: ok(string)
  ## bk account
  ### user.addBkAccount
- > access only for user profile owner, only after login  
+ > access only for user profile owner
  * method: POST
- * params: bkUrl(string with url adress on bookmaker site), login(string), password(string)
+ * params: bkUrl(string with url adress on bookmaker site), login(string), password(string), token(string)
  * result: bkAccount(object)
  ### user.deleteBkAccount
- > access only for user profile owner, only after login  
+ > access only for user profile owner
  * method: POST
- * params: bk_account_id(long)
+ * params: bk_account_id(long), token(string)
  * result: ok(string)
  ### user.setBkAccountBalance
  > only for user fork bot  
