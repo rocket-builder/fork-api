@@ -13,7 +13,6 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>api</name>
 	<description>api for fork bot</description>
-	<packaging>war</packaging>
 
 	<properties>
 		<java.version>11</java.version>
