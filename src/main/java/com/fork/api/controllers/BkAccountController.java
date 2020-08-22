@@ -32,15 +32,9 @@ public class BkAccountController {
             @RequestParam String bkUrl,
             @RequestParam String login,
             @RequestParam String password,
-            HttpSession session
+            @RequestParam String token
     ) {
-        //check if user login
-        if(session.getAttribute("userId") != null) {
-
-            User user = userRepos.findById(
-                    Long.parseLong(session.getAttribute("userId").toString())
-            );
-
+            User user = userRepos.findByToken(token);
             if(user != null) {
 
                 Bookmaker bookmaker = bookmakerRepos.findByLink(bkUrl);
@@ -59,22 +53,14 @@ public class BkAccountController {
                     throw new BookmakerNotFoundException();
             } else
                 throw new UserNotFoundException();
-        } else
-            throw new AccessDeniedException();
     }
 
     @PostMapping("/user.deleteBkAccount")
     public ResponseEntity<String> deleteBkAccount(
             @RequestParam long bk_account_id,
-            HttpSession session
+            @RequestParam String token
     ) {
-        //check if user login
-        if(session.getAttribute("userId") != null) {
-
-            User user = userRepos.findById(
-                    Long.parseLong(session.getAttribute("userId").toString())
-            );
-
+            User user = userRepos.findByToken(token);
             if(user != null) {
 
                 BkAccount bkAccountFromDb = bkAccountRepos.findById(bk_account_id);
@@ -90,8 +76,6 @@ public class BkAccountController {
                     throw new BkAccountNotFoundException();
             } else
                 throw new UserNotFoundException();
-        } else
-            throw new AccessDeniedException();
     }
 
     @PostMapping("/user.setBkAccountBalance")

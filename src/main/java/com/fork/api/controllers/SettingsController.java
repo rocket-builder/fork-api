@@ -1,6 +1,7 @@
 package com.fork.api.controllers;
 
 import com.fork.api.exceptions.AccessDeniedException;
+import com.fork.api.exceptions.UserNotFoundException;
 import com.fork.api.models.Settings;
 import com.fork.api.models.User;
 import com.fork.api.repos.UserRepos;
@@ -23,14 +24,11 @@ public class SettingsController {
     public ResponseEntity<User> setSettings(
             //add new settings in future
             @RequestParam int balance_percent,
-            HttpSession session
+            @RequestParam String token
     ) {
-        //check if user login
-        if(session.getAttribute("userId") != null) {
 
-            User user = userRepos.findById(
-                    Long.parseLong(session.getAttribute("userId").toString())
-            );
+        User user = userRepos.findByToken(token);
+        if(user != null) {
 
             Settings userSettings = user.getSettings();
             //base for edit more settings
@@ -41,6 +39,6 @@ public class SettingsController {
 
             return new ResponseEntity<>(user, HttpStatus.OK);
         } else
-            throw new AccessDeniedException();
+            throw new UserNotFoundException();
     }
 }
