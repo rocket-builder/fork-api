@@ -29,7 +29,7 @@
  ### add.user
  > access only for admins
  * method: POST
- * params: token(string), login(string), password(string), subscribe_end_date('YYYY-mm-dd' formatted string with date)
+ * params: token(string), login(string), password(string), subscribe_end_date('YYYY-mm-dd' formatted string with date), role(ADMIN or USER)(string)
  * result: user(object)
  ### delete.user
  > access only for admins
