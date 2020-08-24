@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 @RestController
@@ -102,8 +105,8 @@ public class UserController {
             throw new InvalidTokenException();
     }
 
-    @PostMapping("/delete.user")
-    public ResponseEntity<String> deleteUser(
+    @PostMapping("/ban.user")
+    public ResponseEntity<String> banUser(
             @RequestParam String token,
             @RequestParam long user_id
     ) {
@@ -114,7 +117,38 @@ public class UserController {
             User userFromDb = userRepos.findById(user_id);
             if(userFromDb != null) {
 
-                userRepos.delete(userFromDb);
+                userFromDb.setSubscribe_end_date(null);
+                userRepos.save(userFromDb);
+
+                return new ResponseEntity<>("ok", HttpStatus.OK);
+            } else
+                throw new UserNotFoundException();
+        } else
+            throw new InvalidTokenException();
+    }
+
+    private Date getSubsdate() throws ParseException {
+
+        Calendar calendar = new GregorianCalendar();
+        String dt = calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH)+2) + "-" + (calendar.get(Calendar.DAY_OF_MONTH)+1);
+
+        return new SimpleDateFormat("yyyy-MM-dd").parse(dt);
+    }
+
+    @PostMapping("/unban.user")
+    public ResponseEntity<String> unbanUser(
+            @RequestParam String token,
+            @RequestParam long user_id
+    ) throws ParseException {
+
+        User userAdmin = userRepos.findByToken(token);
+        if(userAdmin != null && userAdmin.getRole().equals(Role.ADMIN)) {
+
+            User userFromDb = userRepos.findById(user_id);
+            if(userFromDb != null) {
+
+                userFromDb.setSubscribe_end_date(getSubsdate());
+                userRepos.save(userFromDb);
 
                 return new ResponseEntity<>("ok", HttpStatus.OK);
             } else
