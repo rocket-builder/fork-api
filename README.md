@@ -21,6 +21,11 @@
  * method: GET
  * params: id(long), token(string)
  * result: user(object)
+ ### get.users
+ > access only for admin
+ * method: GET
+ * params: token(string)
+ * result: array of user(object)
  ### add.user
  > access only for admins
  * method: POST
