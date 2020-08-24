@@ -36,6 +36,16 @@
  * method: POST
  * params: token(string), user_id(long)
  * result: ok(string)
+  ### ban.user
+ > access only for admins, set subscribe_end_date null
+ * method: POST
+ * params: token(string), user_id(long)
+ * result: ok(string)
+  ### unban.user
+ > access only for admins, set new subscribe_end_date (now + month)
+ * method: POST
+ * params: token(string), user_id(long)
+ * result: ok(string)
  ### user.setSettings
  > access only for user profile owner
  > balance_percent is percent from balance who will use in every bet placement
