@@ -42,6 +42,20 @@ public class User {
         );
     }
 
+    public User(String login, String password, Date subscribe_end_date, Role role) {
+        this.login = login;
+        this.password = password;
+        this.subscribe_end_date = subscribe_end_date;
+        this.signup_date = new Date((new java.util.Date()).getTime());
+        this.role = role;
+        this.token = Security.MD5(login + password);
+
+        this.settings = new Settings(
+                this,
+                Config.BALANCE_PERCENT
+        );
+    }
+
     public long getId() { return id; }
     public void setId(long id) { this.id = id; }
 
