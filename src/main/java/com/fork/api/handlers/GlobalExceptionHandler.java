@@ -33,6 +33,14 @@ public class GlobalExceptionHandler {
         ), HttpStatus.OK);
     }
 
+    @ExceptionHandler(InvalidRoleException.class)
+    public ResponseEntity<ApiError> invalidRoleException(InvalidRoleException ex) {
+
+        return new ResponseEntity<>(new ApiError(
+                400, "Invalid user role parameter."
+        ), HttpStatus.OK);
+    }
+
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public ResponseEntity<ApiError> missingServletRequestParameterException(MissingServletRequestParameterException ex) {
 

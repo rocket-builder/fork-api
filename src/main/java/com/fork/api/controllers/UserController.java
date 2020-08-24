@@ -34,27 +34,34 @@ public class UserController {
             @RequestParam String token,
             @RequestParam String login,
             @RequestParam String password,
+            @RequestParam String role,
             @RequestParam String subscribe_end_date
     ) throws ParseException {
 
-        User userAdmin = userRepos.findByToken(token);
-        if(userAdmin != null && userAdmin.getRole().equals(Role.ADMIN)) {
+        if(role.equals(Role.ADMIN.toString()) || role.equals(Role.USER.toString())) {
 
-            User userFromDb = userRepos.findByLogin(login);
-            if(userFromDb == null) {
+            User userAdmin = userRepos.findByToken(token);
+            if(userAdmin != null && userAdmin.getRole().equals(Role.ADMIN)) {
 
-                User user = new User(
-                        login,
-                        Security.MD5(password),
-                        new SimpleDateFormat("yyyy-MM-dd").parse(subscribe_end_date)
-                );
-                userRepos.save(user);
+                User userFromDb = userRepos.findByLogin(login);
+                if(userFromDb == null) {
 
-                return new ResponseEntity<>(user, HttpStatus.OK);
+                    User user = new User(
+                            login,
+                            Security.MD5(password),
+                            new SimpleDateFormat("yyyy-MM-dd").parse(subscribe_end_date),
+                            role.equals(Role.ADMIN.toString())? Role.ADMIN : Role.USER
+                    );
+                    userRepos.save(user);
+
+                    return new ResponseEntity<>(user, HttpStatus.OK);
+                } else
+                    throw new LoginTakenException();
             } else
-                throw new LoginTakenException();
+                throw new InvalidTokenException();
+
         } else
-            throw new InvalidTokenException();
+            throw new InvalidRoleException();
     }
 
     @GetMapping("/get.user")
