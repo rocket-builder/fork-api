@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 @RestController
 public class UserController {
@@ -78,6 +79,20 @@ public class UserController {
                 throw new InvalidTokenException();
         } else
             throw new UserNotFoundException();
+    }
+
+    @GetMapping("/get.users")
+    public ResponseEntity<List<User>> getUsers(
+            @RequestParam(value = "token") String token
+    ) {
+        User userAdmin = userRepos.findByToken(token);
+        if(userAdmin != null && userAdmin.getRole().equals(Role.ADMIN)) {
+
+            List<User> users = userRepos.findAll();
+
+            return new ResponseEntity<>(users, HttpStatus.OK);
+        } else
+            throw new InvalidTokenException();
     }
 
     @PostMapping("/delete.user")
