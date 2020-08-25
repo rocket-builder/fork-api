@@ -37,12 +37,12 @@
  * params: token(string), user_id(long)
  * result: ok(string)
   ### ban.user
- > access only for admins, set is_ban field in User entity to true
+ > access only for admins, set is_banned field in User entity to true
  * method: POST
  * params: token(string), user_id(long)
  * result: ok(string)
   ### unban.user
- > access only for admins, set is_ban field in User entity to false
+ > access only for admins, set is_banned field in User entity to false
  * method: POST
  * params: token(string), user_id(long)
  * result: ok(string)
