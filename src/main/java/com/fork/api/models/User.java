@@ -26,6 +26,7 @@ public class User {
     private String login, password, token;
     private Date signup_date, subscribe_end_date;
     private Role role;
+    private boolean is_banned;
 
     public User() {}
     public User(String login, String password, Date subscribe_end_date) {
@@ -35,6 +36,7 @@ public class User {
         this.signup_date = new Date((new java.util.Date()).getTime());
         this.role = Role.USER;
         this.token = Security.MD5(login + password);
+        this.is_banned = false;
 
         this.settings = new Settings(
                 this,
@@ -49,6 +51,7 @@ public class User {
         this.signup_date = new Date((new java.util.Date()).getTime());
         this.role = role;
         this.token = Security.MD5(login + password);
+        this.is_banned = false;
 
         this.settings = new Settings(
                 this,
@@ -82,4 +85,7 @@ public class User {
 
     public String getToken() { return token; }
     public void setToken(String token) { this.token = token; }
+
+    public boolean getIs_banned() { return is_banned; }
+    public void setIs_banned(boolean is_banned) { this.is_banned = is_banned; }
 }
