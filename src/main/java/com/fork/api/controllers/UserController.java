@@ -117,7 +117,7 @@ public class UserController {
             User userFromDb = userRepos.findById(user_id);
             if(userFromDb != null) {
 
-                userFromDb.setSubscribe_end_date(null);
+                userFromDb.setIs_banned(true);
                 userRepos.save(userFromDb);
 
                 return new ResponseEntity<>("ok", HttpStatus.OK);
@@ -125,14 +125,6 @@ public class UserController {
                 throw new UserNotFoundException();
         } else
             throw new InvalidTokenException();
-    }
-
-    private Date getSubsdate() throws ParseException {
-
-        Calendar calendar = new GregorianCalendar();
-        String dt = calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH)+2) + "-" + (calendar.get(Calendar.DAY_OF_MONTH)+1);
-
-        return new SimpleDateFormat("yyyy-MM-dd").parse(dt);
     }
 
     @PostMapping("/unban.user")
@@ -147,7 +139,7 @@ public class UserController {
             User userFromDb = userRepos.findById(user_id);
             if(userFromDb != null) {
 
-                userFromDb.setSubscribe_end_date(getSubsdate());
+                userFromDb.setIs_banned(false);
                 userRepos.save(userFromDb);
 
                 return new ResponseEntity<>("ok", HttpStatus.OK);
