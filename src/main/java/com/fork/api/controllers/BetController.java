@@ -43,6 +43,7 @@ public class BetController {
             @RequestParam float coefficient,
             @RequestParam float bet_sum,
             @RequestParam String bet_date
+
     ) throws ParseException {
 
         User userByToken = userRepos.findByToken(token);
