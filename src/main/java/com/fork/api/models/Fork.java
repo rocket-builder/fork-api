@@ -13,7 +13,6 @@ public class Fork {
     private float profit;
     private Date fork_date;
 
-
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "betLeft_id", referencedColumnName = "id")
     private Bet betLeft;

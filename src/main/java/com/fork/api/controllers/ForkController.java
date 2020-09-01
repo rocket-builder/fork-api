@@ -127,20 +127,6 @@ public class ForkController {
             throw new InvalidTokenException();
     }
 
-    @GetMapping("/user.getStats")
-    public ResponseEntity<Profit> getStats(
-            @RequestParam String token
-    ){
-        User userByToken = userRepos.findByToken(token);
-        if (userByToken != null) {
-
-            Profit profit = new Profit(userByToken);
-
-            return new ResponseEntity<>(profit, HttpStatus.OK);
-        } else
-            throw new InvalidTokenException();
-    }
-
     @GetMapping("/get.users.forks")
     public ResponseEntity<List<Fork>> getAllForks(
             @RequestParam String token
@@ -159,31 +145,6 @@ public class ForkController {
                 forks.sort((o1, o2) -> (int) (o1.getId() - o2.getId()));
 
                 return new ResponseEntity<>(forks, HttpStatus.OK);
-            } else
-                throw new AccessDeniedException();
-        } else
-            throw new InvalidTokenException();
-    }
-
-    @GetMapping("/get.users.stats")
-    public ResponseEntity<Profit> getAllStats(
-            @RequestParam String token
-    ){
-        User userByToken = userRepos.findByToken(token);
-        if (userByToken != null) {
-            if(userByToken.getRole().equals(Role.ADMIN)) {
-
-                List<User> users = userRepos.findAll();
-                Profit profit = new Profit();
-
-                users.forEach(user -> {
-                    Profit profitUser = new Profit(user);
-                    profit.setDay(profit.getDay() + profitUser.getDay());
-                    profit.setWeek(profit.getWeek() + profitUser.getWeek());
-                    profit.setMonth(profit.getMonth() + profitUser.getMonth());
-                });
-
-                return new ResponseEntity<>(profit, HttpStatus.OK);
             } else
                 throw new AccessDeniedException();
         } else
