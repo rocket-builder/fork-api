@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@JsonIgnoreProperties({ "user", "bets", "forks" })
+@JsonIgnoreProperties({ "user", "bets"})
 public class BkAccount {
 
     @Id
@@ -24,9 +24,6 @@ public class BkAccount {
     @OneToMany(mappedBy="bk_account")
     private Set<Bet> bets;
 
-    @OneToMany(mappedBy="bkAccount")
-    private Set<Fork> forks;
-
     private String login, password;
     private float balance;
 
@@ -39,7 +36,6 @@ public class BkAccount {
         this.balance = 0;
 
         this.bets = null;
-        this.forks = null;
     }
 
     public long getId() { return id; }
@@ -62,7 +58,4 @@ public class BkAccount {
 
     public Set<Bet> getBets() { return bets; }
     public void setBets(Set<Bet> bets) { this.bets = bets; }
-
-    public Set<Fork> getForks() { return forks; }
-    public void setForks(Set<Fork> forks) { this.forks = forks; }
 }

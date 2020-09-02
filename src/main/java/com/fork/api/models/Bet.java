@@ -22,7 +22,7 @@ public class Bet {
     private Date bet_date;
 
     public Bet() {}
-    public Bet(BkAccount bkAccount, String match, String team, float coefficient, float sum, Date date) {
+    public Bet(BkAccount bkAccount,String match, String team, float coefficient, float sum, Date date) {
         this.bk_account = bkAccount;
         this.match_title = match;
         this.team = team;

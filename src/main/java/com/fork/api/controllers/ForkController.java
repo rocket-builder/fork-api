@@ -80,8 +80,8 @@ public class ForkController {
                         new SimpleDateFormat("yyyy-MM-dd").parse(right_bet_date)
                 );
 
-                //betRepos.save(betLeft);
-                //betRepos.save(betRight);
+                betRepos.save(betLeft);
+                betRepos.save(betRight);
 
                 Fork fork = new Fork(betLeft, betRight);
                 forkRepos.save(fork);
@@ -100,7 +100,7 @@ public class ForkController {
         User userByToken = userRepos.findByToken(token);
         if (userByToken != null) {
 
-            List<Fork> forks = forkRepos.findAllByBkAccount_User(userByToken);
+            List<Fork> forks = forkRepos.findAllByUser(userByToken);
 
             return new ResponseEntity<>(forks, HttpStatus.OK);
         } else
@@ -118,7 +118,7 @@ public class ForkController {
             BkAccount bkAccount = bkAccountRepos.findById(bk_account_id);
             if (bkAccount != null){
 
-                List<Fork> forks = forkRepos.findAllByBkAccount(bkAccount);
+                List<Fork> forks = forkRepos.findAllByLeftBkAccIdOrRightBkAccId(bkAccount.getId(), bkAccount.getId());
 
                 return new ResponseEntity<>(forks, HttpStatus.OK);
             } else
@@ -139,7 +139,7 @@ public class ForkController {
                 List<Fork> forks = new ArrayList<>();
 
                 users.forEach(user -> {
-                    forks.addAll(forkRepos.findAllByBkAccount_User(user));
+                    forks.addAll(forkRepos.findAllByUser(user));
                 });
 
                 forks.sort((o1, o2) -> (int) (o1.getId() - o2.getId()));

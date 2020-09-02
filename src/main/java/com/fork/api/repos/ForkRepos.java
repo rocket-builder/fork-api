@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface ForkRepos extends CrudRepository<Fork, Long> {
 
-    List<Fork> findAllByBkAccount_User(User user);
-    List<Fork> findAllByBkAccount(BkAccount bkAccount);
+    List<Fork> findAllByUser(User user);
+    List<Fork> findAllByLeftBkAccIdOrRightBkAccId(long leftBkAccId, long rightBkAccId);
 }

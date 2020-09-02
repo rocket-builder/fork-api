@@ -25,7 +25,7 @@ public class Profit {
 
         Date today = new Date();
 
-        List<Fork> forks = forkRepos.findAllByBkAccount_User(user);
+        List<Fork> forks = forkRepos.findAllByUser(user);
         forks.forEach(fork -> {
 
             if(fork.getFork_date().equals(today)) this.day += fork.getProfit();

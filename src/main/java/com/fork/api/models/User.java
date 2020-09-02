@@ -20,8 +20,12 @@ public class User {
     @JoinColumn(name = "settings_id", referencedColumnName = "id")
     private Settings settings;
 
-    @OneToMany(mappedBy="user")
+    @OneToMany(mappedBy="user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<BkAccount> bk_accounts;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private Set<Fork> forks;
 
     private String login, password, token;
     private Date signup_date, subscribe_end_date;
@@ -88,4 +92,7 @@ public class User {
 
     public boolean getIs_banned() { return is_banned; }
     public void setIs_banned(boolean is_banned) { this.is_banned = is_banned; }
+
+    public Set<Fork> getForks() { return forks; }
+    public void setForks(Set<Fork> forks) { this.forks = forks; }
 }
