@@ -90,12 +90,6 @@
  * params: token(string), bk_account_id(long), balance(float)
  * result: user(object)
  ## bet
- ### add.bet
- > only for user fork bot  
- * method: POST
- * params: token(string), bk_account_id(long), match_title(string), team(string), coefficient(float), bet_sum(float), bet_date('YYYY-mm-dd' formatted string with date)
- * result: bet(object)
- ### get.bets
  > get bets from all bk accounts from token owner user
  * method: GET
  * params: token(string)
@@ -105,3 +99,50 @@
  * method: GET
  * params: token(string), bk_account_id(long)
  * result: bets(object array)
+ ## forks
+ ### add.fork
+ > only for user fork bot  
+ * method: POST
+ * params: 
+ token(string), 
+ left_bk_account_id(long), 
+ left_match_title(string), 
+ left_team(string), 
+ left_coefficient(float), 
+ left_bet_sum(float), 
+ left_bet_date('YYYY-mm-dd' formatted string with date),
+ 
+ right_bk_account_id(long), 
+ right_match_title(string), 
+ right_team(string), 
+ right_coefficient(float), 
+ right_bet_sum(float), 
+ right_bet_date('YYYY-mm-dd' formatted string with date),
+ * result: fork(object)
+ ### user.getForks
+ > get all forks from user account
+ * method: GET
+ * params: token(string)
+ * result: forks(object array)
+ ### bkAccount.getForks
+ > get all forks from signle bk account
+ * method: GET
+ * params: token(string), bk_account_id(int)
+ * result: forks(object array)
+ ### get.users.forks
+ > get all forks from all users, only for admins
+ * method: GET
+ * params: token(string)
+ * result: forks(object array)
+ ## stats
+ ### get.users.stats
+ > get all profit stats from all users for day, week, month, only for admins
+ * method: GET
+ * params: token(string)
+ * result: profit(object)
+ ### user.getStats
+ > get all profit stats from single user
+ * method: GET
+ * params: token(string)
+ * result: profit(object) 
+
