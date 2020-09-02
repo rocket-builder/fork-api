@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@JsonIgnoreProperties({ "user", "bets" })
+@JsonIgnoreProperties({ "user", "bets"})
 public class BkAccount {
 
     @Id

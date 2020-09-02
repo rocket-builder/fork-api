@@ -34,41 +34,43 @@ public class BetController {
     @Autowired
     BetRepos betRepos;
 
-    @PostMapping("/add.bet")
-    public ResponseEntity<Bet> addBet(
-            @RequestParam String token,
-            @RequestParam long bk_account_id,
-            @RequestParam String match_title,
-            @RequestParam String team,
-            @RequestParam float coefficient,
-            @RequestParam float bet_sum,
-            @RequestParam String bet_date
-    ) throws ParseException {
-
-        User userByToken = userRepos.findByToken(token);
-        BkAccount bkAccount = bkAccountRepos.findById(bk_account_id);
-
-        if(userByToken != null) {
-
-            if(bkAccount.getUser().equals(userByToken)) {
-
-                Bet bet = new Bet(
-                        bkAccount,
-                        match_title,
-                        team,
-                        coefficient,
-                        bet_sum,
-                        new SimpleDateFormat("yyyy-MM-dd").parse(bet_date)
-                );
-
-                betRepos.save(bet);
-
-                return new ResponseEntity<>(bet, HttpStatus.OK);
-            } else
-                throw new AccessDeniedException();
-        } else
-            throw new InvalidTokenException();
-    }
+    //DEPRECATED
+//    @PostMapping("/add.bet")
+//    public ResponseEntity<Bet> addBet(
+//            @RequestParam String token,
+//            @RequestParam long bk_account_id,
+//            @RequestParam String match_title,
+//            @RequestParam String team,
+//            @RequestParam float coefficient,
+//            @RequestParam float bet_sum,
+//            @RequestParam String bet_date
+//
+//    ) throws ParseException {
+//
+//        User userByToken = userRepos.findByToken(token);
+//        BkAccount bkAccount = bkAccountRepos.findById(bk_account_id);
+//
+//        if(userByToken != null) {
+//
+//            if(bkAccount.getUser().equals(userByToken)) {
+//
+//                Bet bet = new Bet(
+//                        bkAccount,
+//                        match_title,
+//                        team,
+//                        coefficient,
+//                        bet_sum,
+//                        new SimpleDateFormat("yyyy-MM-dd").parse(bet_date)
+//                );
+//
+//                betRepos.save(bet);
+//
+//                return new ResponseEntity<>(bet, HttpStatus.OK);
+//            } else
+//                throw new AccessDeniedException();
+//        } else
+//            throw new InvalidTokenException();
+//    }
 
     @GetMapping("/get.bets")
     public ResponseEntity<List<Bet>> getBets(

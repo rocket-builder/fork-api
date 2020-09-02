@@ -1,9 +1,12 @@
 package com.fork.api.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@JsonIgnoreProperties({ "bk_account" })
 public class Bet {
 
     @Id
@@ -19,7 +22,7 @@ public class Bet {
     private Date bet_date;
 
     public Bet() {}
-    public Bet(BkAccount bkAccount, String match, String team, float coefficient, float sum, Date date) {
+    public Bet(BkAccount bkAccount,String match, String team, float coefficient, float sum, Date date) {
         this.bk_account = bkAccount;
         this.match_title = match;
         this.team = team;
