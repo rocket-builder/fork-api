@@ -36,7 +36,7 @@ public class ForkController {
     @Autowired
     UserRepos userRepos;
 
-    @PostMapping("/add.Fork")
+    @PostMapping("/add.fork")
     public ResponseEntity<Fork> addFork(
             @RequestParam String token,
 
