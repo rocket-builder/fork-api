@@ -3,6 +3,7 @@ package com.fork.api.controllers;
 import com.fork.api.enums.Role;
 import com.fork.api.exceptions.AccessDeniedException;
 import com.fork.api.exceptions.InvalidTokenException;
+import com.fork.api.exceptions.UserNotFoundException;
 import com.fork.api.models.Profit;
 import com.fork.api.models.User;
 import com.fork.api.repos.ForkRepos;
@@ -43,6 +44,29 @@ public class StatsController {
                 });
 
                 return new ResponseEntity<>(profit, HttpStatus.OK);
+            } else
+                throw new AccessDeniedException();
+        } else
+            throw new InvalidTokenException();
+    }
+
+    @GetMapping("/get.user.stats")
+    public ResponseEntity<Profit> getSingleStats(
+            @RequestParam String token,
+            @RequestParam long id
+    ){
+        User userByToken = userRepos.findByToken(token);
+        if (userByToken != null) {
+            if(userByToken.getRole().equals(Role.ADMIN)) {
+
+                User user = userRepos.findById(id);
+                if(user != null) {
+
+
+                    Profit profit = new Profit(forkRepos.findAllByUser(user));
+                    return new ResponseEntity<>(profit, HttpStatus.OK);
+                } else
+                    throw new UserNotFoundException();
             } else
                 throw new AccessDeniedException();
         } else
