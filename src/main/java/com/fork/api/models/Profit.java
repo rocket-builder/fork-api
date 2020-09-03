@@ -9,16 +9,19 @@ import java.util.Calendar;
 
 public class Profit {
 
+    private String userLogin;
     private float day;
     private float week;
     private float month;
 
     public Profit(){
+        this.userLogin = "";
         this.day = 0;
         this.week = 0;
         this.month = 0;
     }
     public Profit(List<Fork> forks){
+        this.userLogin = forks.get(0).getUser().getLogin();
         this.day = 0;
         this.week = 0;
         this.month = 0;
@@ -56,4 +59,7 @@ public class Profit {
 
     public float getMonth() { return month; }
     public void setMonth(float month) { this.month = month; }
+
+    public String getUserLogin() { return userLogin; }
+    public void setUserLogin(String userLogin) { this.userLogin = userLogin; }
 }
