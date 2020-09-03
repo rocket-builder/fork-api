@@ -9,26 +9,29 @@ import java.util.Calendar;
 
 public class Profit {
 
-    @Autowired
-    ForkRepos forkRepos;
-
-    private float day = 0;
-    private float week = 0;
-    private float month = 0;
+    private float day;
+    private float week;
+    private float month;
 
     public Profit(){
         this.day = 0;
         this.week = 0;
         this.month = 0;
     }
-    public Profit(User user){
+    public Profit(List<Fork> forks){
+        this.day = 0;
+        this.week = 0;
+        this.month = 0;
 
-        Date today = new Date();
+        Date today = new Date((new java.util.Date()).getTime());
 
-        List<Fork> forks = forkRepos.findAllByUser(user);
         forks.forEach(fork -> {
 
-            if(fork.getFork_date().equals(today)) this.day += fork.getProfit();
+            if(
+                    fork.getFork_date().getDay() == today.getDay() &&
+                    fork.getFork_date().getMonth() == today.getMonth() &&
+                    fork.getFork_date().getYear() == today.getYear()
+            ) this.day += fork.getProfit();
             if(isDateInCurrentWeek(fork.getFork_date())) this.week += fork.getProfit();
             if(fork.getFork_date().getMonth() == today.getMonth()) this.month += fork.getProfit();
         });

@@ -3,8 +3,10 @@ package com.fork.api.controllers;
 import com.fork.api.enums.Role;
 import com.fork.api.exceptions.AccessDeniedException;
 import com.fork.api.exceptions.InvalidTokenException;
+import com.fork.api.exceptions.UserNotFoundException;
 import com.fork.api.models.Profit;
 import com.fork.api.models.User;
+import com.fork.api.repos.ForkRepos;
 import com.fork.api.repos.UserRepos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +22,8 @@ public class StatsController {
 
     @Autowired
     UserRepos userRepos;
+    @Autowired
+    ForkRepos forkRepos;
 
     @GetMapping("/get.users.stats")
     public ResponseEntity<Profit> getAllStats(
@@ -33,13 +37,36 @@ public class StatsController {
                 Profit profit = new Profit();
 
                 users.forEach(user -> {
-                    Profit profitUser = new Profit(user);
+                    Profit profitUser = new Profit(forkRepos.findAllByUser(user));
                     profit.setDay(profit.getDay() + profitUser.getDay());
                     profit.setWeek(profit.getWeek() + profitUser.getWeek());
                     profit.setMonth(profit.getMonth() + profitUser.getMonth());
                 });
 
                 return new ResponseEntity<>(profit, HttpStatus.OK);
+            } else
+                throw new AccessDeniedException();
+        } else
+            throw new InvalidTokenException();
+    }
+
+    @GetMapping("/get.user.stats")
+    public ResponseEntity<Profit> getSingleStats(
+            @RequestParam String token,
+            @RequestParam long id
+    ){
+        User userByToken = userRepos.findByToken(token);
+        if (userByToken != null) {
+            if(userByToken.getRole().equals(Role.ADMIN)) {
+
+                User user = userRepos.findById(id);
+                if(user != null) {
+
+
+                    Profit profit = new Profit(forkRepos.findAllByUser(user));
+                    return new ResponseEntity<>(profit, HttpStatus.OK);
+                } else
+                    throw new UserNotFoundException();
             } else
                 throw new AccessDeniedException();
         } else
@@ -53,7 +80,7 @@ public class StatsController {
         User userByToken = userRepos.findByToken(token);
         if (userByToken != null) {
 
-            Profit profit = new Profit(userByToken);
+            Profit profit = new Profit(forkRepos.findAllByUser(userByToken));
 
             return new ResponseEntity<>(profit, HttpStatus.OK);
         } else

@@ -18,10 +18,30 @@
 <button onclick="addBet()">addBet</button>
 <button onclick="getBets()">get all bets</button>
 <button onclick="getBetsSingle()">get single bk account bets</button>
+<button onclick="addFork()">add fork</button>
+<button onclick="getStats()">getStats</button>
 
 </body>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script>
+    function getStats() {
+        $.ajax({
+            type: "GET",
+            url: "/get.users.stats",
+            data: {
+                //token: "699679f38595e51ed155a181f3270c85"
+                token: "token228"
+            },
+            success: function(response) {
+                console.log(response);
+                console.log($.parseJSON(response));
+            },
+            error: function(response) {
+                console.log('ERROR: ' + response);
+                console.log($.parseJSON(response));
+            }
+        });
+    }
     function getBetsSingle() {
         $.ajax({
             type: "GET",
@@ -46,6 +66,36 @@
             url: "/get.bets",
             data: {
                 token: "699679f38595e51ed155a181f3270c85"
+            },
+            success: function(response) {
+                console.log(response);
+                console.log($.parseJSON(response));
+            },
+            error: function(response) {
+                console.log('ERROR: ' + response);
+                console.log($.parseJSON(response));
+            }
+        });
+    }
+    function addFork() {
+        $.ajax({
+            type: "POST",
+            url: "/add.fork",
+            data: {
+                token: "699679f38595e51ed155a181f3270c85",
+                left_bk_account_id: 6,
+                left_match_title: "some dota or cs match",
+                left_team: "left team",
+                left_coefficient: 2,
+                left_bet_sum: 1000,
+                left_bet_date: "2020-09-03",
+
+                right_bk_account_id: 82,
+                right_match_title: "some dota or cs match",
+                right_team: "right team",
+                right_coefficient: 7,
+                right_bet_sum: 1000,
+                right_bet_date: "2020-09-03"
             },
             success: function(response) {
                 console.log(response);

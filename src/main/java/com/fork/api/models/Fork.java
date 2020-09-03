@@ -8,8 +8,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+//@JsonIgnoreProperties({ "user" })
 @Entity
-@JsonIgnoreProperties({ "bkAccount" })
 public class Fork {
 
     @Id
@@ -23,6 +23,9 @@ public class Fork {
     private float profit;
     private Date fork_date;
     private String leftBkTitle, rightBkTitle;
+    private String leftTeamTitle, rightTeamTitle;
+    private String leftBkAccLogin, rightBkAccLogin;
+    private String matchTitle;
     private long leftBkAccId, rightBkAccId;
 
     public Fork(){}
@@ -33,10 +36,20 @@ public class Fork {
                         (betRight.getSum() * betRight.getCoefficient())
                 );
         this.fork_date = betLeft.getDate();
+
         this.leftBkTitle = betLeft.getBkAccount().getBookmaker().getTitle();
-        this.leftBkTitle = betRight.getBkAccount().getBookmaker().getTitle();
+        this.rightBkTitle = betRight.getBkAccount().getBookmaker().getTitle();
+
         this.leftBkAccId = betLeft.getBkAccount().getId();
         this.rightBkAccId = betRight.getBkAccount().getId();
+
+        this.leftTeamTitle = betLeft.getTeam();
+        this.rightTeamTitle = betRight.getTeam();
+
+        this.leftBkAccLogin = betLeft.getBkAccount().getLogin();
+        this.rightBkAccLogin = betRight.getBkAccount().getLogin();
+
+        this.matchTitle = betLeft.getMatch();
         this.user = betLeft.getBkAccount().getUser();
     }
 
@@ -63,4 +76,19 @@ public class Fork {
 
     public long getRightBkAccId() { return rightBkAccId; }
     public void setRightBkAccId(long rightBkAccId) { this.rightBkAccId = rightBkAccId; }
+
+    public String getLeftTeamTitle() { return leftTeamTitle; }
+    public void setLeftTeamTitle(String leftTeamTitle) { this.leftTeamTitle = leftTeamTitle; }
+
+    public String getRightTeamTitle() { return rightTeamTitle; }
+    public void setRightTeamTitle(String rightTeamTitle) { this.rightTeamTitle = rightTeamTitle; }
+
+    public String getMatchTitle() { return matchTitle; }
+    public void setMatchTitle(String matchTitle) { this.matchTitle = matchTitle; }
+
+    public String getLeftBkAccLogin() { return leftBkAccLogin; }
+    public void setLeftBkAccLogin(String leftBkAccLogin) { this.leftBkAccLogin = leftBkAccLogin; }
+
+    public String getRightBkAccLogin() { return rightBkAccLogin; }
+    public void setRightBkAccLogin(String rightBkAccLogin) { this.rightBkAccLogin = rightBkAccLogin; }
 }
