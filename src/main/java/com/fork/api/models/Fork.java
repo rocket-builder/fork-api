@@ -24,6 +24,7 @@ public class Fork {
     private Date fork_date;
     private String leftBkTitle, rightBkTitle;
     private String leftTeamTitle, rightTeamTitle;
+    private String leftBkAccLogin, rightBkAccLogin;
     private String matchTitle;
     private long leftBkAccId, rightBkAccId;
 
@@ -35,12 +36,19 @@ public class Fork {
                         (betRight.getSum() * betRight.getCoefficient())
                 );
         this.fork_date = betLeft.getDate();
+
         this.leftBkTitle = betLeft.getBkAccount().getBookmaker().getTitle();
         this.rightBkTitle = betRight.getBkAccount().getBookmaker().getTitle();
+
         this.leftBkAccId = betLeft.getBkAccount().getId();
         this.rightBkAccId = betRight.getBkAccount().getId();
+
         this.leftTeamTitle = betLeft.getTeam();
         this.rightTeamTitle = betRight.getTeam();
+
+        this.leftBkAccLogin = betLeft.getBkAccount().getLogin();
+        this.rightBkAccLogin = betRight.getBkAccount().getLogin();
+
         this.matchTitle = betLeft.getMatch();
         this.user = betLeft.getBkAccount().getUser();
     }
