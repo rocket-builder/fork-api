@@ -136,12 +136,17 @@
  * result: forks(object array)
  ## stats
  ### get.users.stats
- > get all profit stats from all users for day, week, month, only for admins
+ > get sum of all profit stats from all users for day, week, month, only for admins
  * method: GET
  * params: token(string)
  * result: profit(object)
+ ### get.users.statsList
+ > get list of sum of all profit stats from all users for day, week, month, only for admins
+ * method: GET
+ * params: token(string)
+ * result: profit(object array)
  ### get.user.stats
- > get all profit stats from single users for day, week, month, only for admins
+ > get sum of all profit stats from single users for day, week, month, only for admins
  * method: GET
  * params: token(string), id(int)
  * result: profit(object)
