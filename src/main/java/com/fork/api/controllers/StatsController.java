@@ -37,7 +37,7 @@ public class StatsController {
                 Profit profit = new Profit();
 
                 users.forEach(user -> {
-                    Profit profitUser = new Profit(forkRepos.findAllByUser(user));
+                    Profit profitUser = new Profit(forkRepos.findAllByUser(user), user);
                     profit.setDay(profit.getDay() + profitUser.getDay());
                     profit.setWeek(profit.getWeek() + profitUser.getWeek());
                     profit.setMonth(profit.getMonth() + profitUser.getMonth());
@@ -63,7 +63,7 @@ public class StatsController {
                 if(user != null) {
 
 
-                    Profit profit = new Profit(forkRepos.findAllByUser(user));
+                    Profit profit = new Profit(forkRepos.findAllByUser(user), user);
                     return new ResponseEntity<>(profit, HttpStatus.OK);
                 } else
                     throw new UserNotFoundException();
@@ -80,7 +80,7 @@ public class StatsController {
         User userByToken = userRepos.findByToken(token);
         if (userByToken != null) {
 
-            Profit profit = new Profit(forkRepos.findAllByUser(userByToken));
+            Profit profit = new Profit(forkRepos.findAllByUser(userByToken), userByToken);
 
             return new ResponseEntity<>(profit, HttpStatus.OK);
         } else

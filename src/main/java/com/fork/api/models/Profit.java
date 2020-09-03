@@ -20,8 +20,8 @@ public class Profit {
         this.week = 0;
         this.month = 0;
     }
-    public Profit(List<Fork> forks){
-        this.userLogin = forks.get(0).getUser().getLogin();
+    public Profit(List<Fork> forks, User user){
+        this.userLogin = user.getLogin();
         this.day = 0;
         this.week = 0;
         this.month = 0;
