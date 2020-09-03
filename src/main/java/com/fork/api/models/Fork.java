@@ -8,8 +8,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+//@JsonIgnoreProperties({ "user" })
 @Entity
-@JsonIgnoreProperties({ "user" })
 public class Fork {
 
     @Id
