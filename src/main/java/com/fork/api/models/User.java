@@ -1,5 +1,6 @@
 package com.fork.api.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fork.api.Config;
 import com.fork.api.Security;
 import com.fork.api.enums.Role;
@@ -10,6 +11,7 @@ import java.util.Date;
 import java.util.Set;
 
 @Entity
+@JsonIgnoreProperties({ "forks" })
 public class User {
 
     @Id

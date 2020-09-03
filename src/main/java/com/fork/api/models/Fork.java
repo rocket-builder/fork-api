@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@JsonIgnoreProperties({ "bkAccount" })
+@JsonIgnoreProperties({ "user" })
 public class Fork {
 
     @Id
@@ -34,7 +34,7 @@ public class Fork {
                 );
         this.fork_date = betLeft.getDate();
         this.leftBkTitle = betLeft.getBkAccount().getBookmaker().getTitle();
-        this.leftBkTitle = betRight.getBkAccount().getBookmaker().getTitle();
+        this.rightBkTitle = betRight.getBkAccount().getBookmaker().getTitle();
         this.leftBkAccId = betLeft.getBkAccount().getId();
         this.rightBkAccId = betRight.getBkAccount().getId();
         this.user = betLeft.getBkAccount().getUser();
