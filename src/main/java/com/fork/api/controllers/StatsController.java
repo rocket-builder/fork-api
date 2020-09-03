@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -44,6 +45,28 @@ public class StatsController {
                 });
 
                 return new ResponseEntity<>(profit, HttpStatus.OK);
+            } else
+                throw new AccessDeniedException();
+        } else
+            throw new InvalidTokenException();
+    }
+
+    @GetMapping("/get.users.statsList")
+    public ResponseEntity<List<Profit>> getAllStatsList(
+            @RequestParam String token
+    ){
+        User userByToken = userRepos.findByToken(token);
+        if (userByToken != null) {
+            if(userByToken.getRole().equals(Role.ADMIN)) {
+
+                List<User> users = userRepos.findAll();
+                List<Profit> profits = new ArrayList<>();
+
+                users.forEach(user -> {
+                    profits.add(new Profit(forkRepos.findAllByUser(user), user));
+                });
+
+                return new ResponseEntity<>(profits, HttpStatus.OK);
             } else
                 throw new AccessDeniedException();
         } else
