@@ -140,6 +140,11 @@
  * method: GET
  * params: token(string)
  * result: profit(object)
+ ### get.user.stats
+ > get all profit stats from single users for day, week, month, only for admins
+ * method: GET
+ * params: token(string), id(int)
+ * result: profit(object)
  ### user.getStats
  > get all profit stats from single user
  * method: GET
