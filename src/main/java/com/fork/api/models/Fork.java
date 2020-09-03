@@ -85,4 +85,10 @@ public class Fork {
 
     public String getMatchTitle() { return matchTitle; }
     public void setMatchTitle(String matchTitle) { this.matchTitle = matchTitle; }
+
+    public String getLeftBkAccLogin() { return leftBkAccLogin; }
+    public void setLeftBkAccLogin(String leftBkAccLogin) { this.leftBkAccLogin = leftBkAccLogin; }
+
+    public String getRightBkAccLogin() { return rightBkAccLogin; }
+    public void setRightBkAccLogin(String rightBkAccLogin) { this.rightBkAccLogin = rightBkAccLogin; }
 }
