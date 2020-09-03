@@ -23,6 +23,8 @@ public class Fork {
     private float profit;
     private Date fork_date;
     private String leftBkTitle, rightBkTitle;
+    private String leftTeamTitle, rightTeamTitle;
+    private String matchTitle;
     private long leftBkAccId, rightBkAccId;
 
     public Fork(){}
@@ -37,6 +39,9 @@ public class Fork {
         this.rightBkTitle = betRight.getBkAccount().getBookmaker().getTitle();
         this.leftBkAccId = betLeft.getBkAccount().getId();
         this.rightBkAccId = betRight.getBkAccount().getId();
+        this.leftTeamTitle = betLeft.getTeam();
+        this.rightTeamTitle = betRight.getTeam();
+        this.matchTitle = betLeft.getMatch();
         this.user = betLeft.getBkAccount().getUser();
     }
 
@@ -63,4 +68,13 @@ public class Fork {
 
     public long getRightBkAccId() { return rightBkAccId; }
     public void setRightBkAccId(long rightBkAccId) { this.rightBkAccId = rightBkAccId; }
+
+    public String getLeftTeamTitle() { return leftTeamTitle; }
+    public void setLeftTeamTitle(String leftTeamTitle) { this.leftTeamTitle = leftTeamTitle; }
+
+    public String getRightTeamTitle() { return rightTeamTitle; }
+    public void setRightTeamTitle(String rightTeamTitle) { this.rightTeamTitle = rightTeamTitle; }
+
+    public String getMatchTitle() { return matchTitle; }
+    public void setMatchTitle(String matchTitle) { this.matchTitle = matchTitle; }
 }
