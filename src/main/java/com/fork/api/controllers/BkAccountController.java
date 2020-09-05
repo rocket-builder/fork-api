@@ -77,9 +77,9 @@ public class BkAccountController {
 
     @RequestMapping(value = "/user.setBkAccountBalance", method = RequestMethod.POST,consumes="application/json")
     public ResponseEntity<User> bkAccountSetBalance(
-            @RequestParam String token,
-            @RequestParam long bk_account_id,
-            @RequestParam float balance
+            @RequestBody String token,
+            @RequestBody long bk_account_id,
+            @RequestBody float balance
     ) {
         User userByToken = userRepos.findByToken(token);
         if(userByToken != null) {
