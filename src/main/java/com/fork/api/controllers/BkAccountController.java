@@ -10,7 +10,10 @@ import com.fork.api.repos.UserRepos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 
@@ -74,12 +77,12 @@ public class BkAccountController {
             } else
                 throw new UserNotFoundException();
     }
-
-    @RequestMapping(value = "/user.setBkAccountBalance", method = RequestMethod.POST,consumes="application/json")
+    
+    @PostMapping("/user.setBkAccountBalance")
     public ResponseEntity<User> bkAccountSetBalance(
-            @RequestBody String token,
-            @RequestBody long bk_account_id,
-            @RequestBody float balance
+            @RequestParam String token,
+            @RequestParam long bk_account_id,
+            @RequestParam float balance
     ) {
         User userByToken = userRepos.findByToken(token);
         if(userByToken != null) {
