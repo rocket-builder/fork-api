@@ -77,7 +77,7 @@ public class BkAccountController {
             } else
                 throw new UserNotFoundException();
     }
-    
+
     @PostMapping("/user.setBkAccountBalance")
     public ResponseEntity<User> bkAccountSetBalance(
             @RequestParam String token,

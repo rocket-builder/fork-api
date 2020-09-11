@@ -60,6 +60,8 @@ public class ForkController {
 
             BkAccount leftBkAccount = bkAccountRepos.findById(left_bk_account_id);
             BkAccount rightBkAccount = bkAccountRepos.findById(right_bk_account_id);
+
+            if(leftBkAccount == null || rightBkAccount == null) throw new BkAccountNotFoundException();
             if (leftBkAccount.getUser().equals(userByToken) && rightBkAccount.getUser().equals(userByToken)) {
 
                 Bet betLeft = new Bet(
