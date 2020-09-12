@@ -13,6 +13,7 @@
 <button onclick="getAllBk()"> get all bk</button>
 <button onclick="addBk('parimatch', 'www.parimatch.com')">add bk</button>
 <button onclick="addBkAcc('www.parimatch.com')">add bk acc</button>
+<button onclick="setSettings()">setSettings</button>
 
 <button onclick="setBkAccBalance(6, 20000)">set bk acc balance</button>
 <button onclick="addBet()">addBet</button>
@@ -229,6 +230,34 @@
             type: "POST",
             url: "/logout",
             data: {},
+            success: function(response) {
+                console.log(response);
+                console.log($.parseJSON(response));
+            },
+            error: function(response) {
+                console.log('ERROR: ' + response);
+                console.log($.parseJSON(response));
+            }
+        });
+    }
+    function setSettings() {
+        $.ajax({
+            type: "POST",
+            url: "/user.setSettings?token="+"token228",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+                balance_percent: 10,
+                forks_live_time: 10,
+                games: [
+                    "CSGO",
+                    "DOTA2",
+                    "LoL"
+                ],
+                markets: [
+                    "MatchWinner",
+                    "MatchKillsTotal"
+                ]}
+            ),
             success: function(response) {
                 console.log(response);
                 console.log($.parseJSON(response));
