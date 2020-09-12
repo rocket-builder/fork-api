@@ -50,7 +50,9 @@
  > access only for user profile owner
  > balance_percent is percent from balance who will use in every bet placement
  * method: POST
- * params: balance_percent(int), token(string)
+ * content type: application/json, charset=utf-8
+ * params: token(string)
+ * data: balance_percent(int), forks_live_time(int), games(string array), markets(string array)
  * result: user(object)
  ## bookmaker
  ### get.bookmaker
