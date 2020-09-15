@@ -1,11 +1,9 @@
 package com.fork.api.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fork.api.enums.EMarket;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 
@@ -21,7 +19,7 @@ public class Settings {
     private User user;
 
     private int balance_percent;
-    private int forks_live_time;
+    private int forks_live_time_max, forks_live_time_min;
 
     @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
@@ -45,7 +43,8 @@ public class Settings {
         this.user = user;
         this.balance_percent = balance_percent;
 
-        this.forks_live_time = 10;
+        this.forks_live_time_max = 10;
+        this.forks_live_time_min = 3;
 
         this.games = new HashSet<>();
         games.add(new Game("СSGO"));
@@ -54,12 +53,13 @@ public class Settings {
         this.markets = new HashSet<>();
         markets.add(new Market("MatchWinner"));
     }
-    public Settings(User user, int balance_percent, Set<Game> games, Set<Market> markets, int forks_live_time) {
+    public Settings(User user, int balance_percent, Set<Game> games, Set<Market> markets, int forks_live_time_max, int forks_live_time_min) {
         this.user = user;
         this.balance_percent = balance_percent;
         this.games = games;
         this.markets = markets;
-        this.forks_live_time = forks_live_time;
+        this.forks_live_time_max = forks_live_time_max;
+        this.forks_live_time_min = forks_live_time_min;
     }
 
     public long getId() { return id; }
@@ -77,6 +77,9 @@ public class Settings {
     public Set<Market> getMarkets() { return markets; }
     public void setMarkets(Set<Market> markets) { this.markets = markets; }
 
-    public int getForks_live_time() { return forks_live_time; }
-    public void setForks_live_time(int forks_live_time) { this.forks_live_time = forks_live_time; }
+    public int getForks_live_time_max() { return forks_live_time_max; }
+    public void setForks_live_time_max(int forks_live_time_max) { this.forks_live_time_max = forks_live_time_max; }
+
+    public int getForks_live_time_min() { return forks_live_time_min; }
+    public void setForks_live_time_min(int forks_live_time_min) { this.forks_live_time_min = forks_live_time_min; }
 }
