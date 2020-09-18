@@ -3,6 +3,7 @@ package com.fork.api.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -71,7 +72,13 @@ public class Settings {
     public int getBalance_percent() { return balance_percent; }
     public void setBalance_percent(int balance_percent) { this.balance_percent = balance_percent; }
 
-    public Set<Game> getGames() { return games; }
+    public ArrayList<String> getGames() {
+        ArrayList<String> gamesArr = new ArrayList<>();
+        games.forEach(game -> {
+            gamesArr.add(game.getGame().toString());
+        });
+        return gamesArr;
+    }
     public void setGames(Set<Game> games) { this.games = games;}
 
     public Set<Market> getMarkets() { return markets; }
