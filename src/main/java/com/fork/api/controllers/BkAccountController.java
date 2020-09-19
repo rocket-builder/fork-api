@@ -1,6 +1,7 @@
 package com.fork.api.controllers;
 
 import com.fork.api.exceptions.*;
+import com.fork.api.models.BkAccSettings;
 import com.fork.api.models.BkAccount;
 import com.fork.api.models.Bookmaker;
 import com.fork.api.models.User;
@@ -9,11 +10,9 @@ import com.fork.api.repos.BookmakerRepos;
 import com.fork.api.repos.UserRepos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -53,6 +52,28 @@ public class BkAccountController {
                     throw new BookmakerNotFoundException();
             } else
                 throw new UserNotFoundException();
+    }
+
+    @PostMapping("/get.bkAccount")
+    public ResponseEntity<BkAccount> addBkAccount(
+            @RequestParam String token,
+            @RequestParam long bk_account_id
+    ) {
+        User userByToken = userRepos.findByToken(token);
+        if(userByToken != null) {
+
+            BkAccount bkAccount = bkAccountRepos.findById(bk_account_id);
+            if(bkAccount != null) {
+
+                if(userByToken.getBk_accounts().contains(bkAccount)) {
+
+                    return new ResponseEntity<>(bkAccount, HttpStatus.OK);
+                } else
+                    throw new AccessDeniedException();
+            } else
+                throw new BkAccountNotFoundException();
+        } else
+            throw new InvalidTokenException();
     }
 
     @PostMapping("/user.deleteBkAccount")
@@ -100,6 +121,32 @@ public class BkAccountController {
                         return new ResponseEntity<>(userByToken, HttpStatus.OK);
                     } else
                         throw new NegativeBalanceException();
+                } else
+                    throw new AccessDeniedException();
+            } else
+                throw new BkAccountNotFoundException();
+        } else
+            throw new InvalidTokenException();
+    }
+
+    @RequestMapping(value = "/user.setBkAccountSettings", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<User> bkAccountSetSettings(
+            @RequestParam String token,
+            @RequestParam long bk_account_id,
+            @RequestBody BkAccSettings settings
+            ) {
+        User userByToken = userRepos.findByToken(token);
+        if(userByToken != null) {
+
+            BkAccount bkAccount = bkAccountRepos.findById(bk_account_id);
+            if(bkAccount != null) {
+
+                if(userByToken.getBk_accounts().contains(bkAccount)) {
+
+                    bkAccount.setSettings(settings);
+                    bkAccountRepos.save(bkAccount);
+
+                    return new ResponseEntity<>(userByToken, HttpStatus.OK);
                 } else
                     throw new AccessDeniedException();
             } else
