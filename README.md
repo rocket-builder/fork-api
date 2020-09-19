@@ -81,6 +81,11 @@
  * params: token(string), link(string with url adress on bookmaker site)
  * result: ok(string)
  ## bk account
+ ### get.bkAccount
+ > get bk account object  
+ * method: GET
+ * params: token(string), bk_account_id(long)
+ * result: bkAccount(object)
  ### user.addBkAccount
  > access only for user profile owner
  * method: POST
