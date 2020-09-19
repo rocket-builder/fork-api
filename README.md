@@ -96,6 +96,13 @@
  * method: POST
  * params: token(string), bk_account_id(long), balance(float)
  * result: user(object)
+ ### user.setBkAccountSettings
+ > only for user fork bot  
+ * method: POST
+ * content type: application/json, charset=utf-8
+ * params: token(string), bk_account_id(long)
+ * data: bkMirror(string), rounding(int), bet_sum_min(int), bet_sum_max(int), cf_min(int), cf_max(int)
+ * result: user(object)
  ## bet
  > get bets from all bk accounts from token owner user
  * method: GET
