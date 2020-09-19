@@ -3,6 +3,7 @@ package com.fork.api.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -12,6 +13,10 @@ public class BkAccount {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "settings_id", referencedColumnName = "id")
+    private BkAccSettings settings;
 
     @ManyToOne
     @JoinColumn(name="user_id", nullable=false)
@@ -35,7 +40,9 @@ public class BkAccount {
         this.password = password;
         this.balance = 0;
 
-        this.bets = null;
+        this.bets = new HashSet<>();
+
+        this.settings = new BkAccSettings(this);
     }
 
     public long getId() { return id; }
@@ -58,4 +65,7 @@ public class BkAccount {
 
     public Set<Bet> getBets() { return bets; }
     public void setBets(Set<Bet> bets) { this.bets = bets; }
+
+    public BkAccSettings getSettings() { return settings; }
+    public void setSettings(BkAccSettings settings) { this.settings = settings; }
 }

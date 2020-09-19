@@ -1,6 +1,7 @@
 package com.fork.api.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fork.api.Config;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.Set;
 
 
 @Entity
-@JsonIgnoreProperties({ "user" })
+@JsonIgnoreProperties({ "user", "balance_percent" })
 public class Settings {
 
     @Id
@@ -20,7 +21,12 @@ public class Settings {
     private User user;
 
     private int balance_percent;
-    private int forks_live_time_max, forks_live_time_min;
+    private int forks_live_time_max, forks_live_time_min,
+                fork_profit_percent_min, fork_profit_percent_max,
+                fork_done_try_cooldown, fork_cancel_try_cooldown,
+                fork_second_bet_timeout,
+                fork_not_closed_cooldown,
+                try_time_max;
 
     @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
@@ -40,27 +46,26 @@ public class Settings {
 
 
     public Settings() {}
-    public Settings(User user, int balance_percent) {
+    public Settings(User user) {
         this.user = user;
-        this.balance_percent = balance_percent;
+        this.balance_percent = Config.BALANCE_PERCENT;
 
-        this.forks_live_time_max = 10;
-        this.forks_live_time_min = 3;
+        this.forks_live_time_max = Config.FORKS_LIVE_TIME_MAX;
+        this.forks_live_time_min = Config.FORKS_LIVE_TIME_MIN;
+        this.fork_profit_percent_min = Config.FORK_PROFIT_PERCENT_MIN;
+        this.fork_profit_percent_max = Config.FORK_PROFIT_PERCENT_MAX;
+        this.fork_done_try_cooldown = Config.FORK_DONE_TRY_COOLDOWN;
+        this.fork_cancel_try_cooldown = Config.FORK_CANCEL_TRY_COOLDOWN;
+        this.fork_second_bet_timeout = Config.FORK_SECOND_BET_TIMEOUT;
+        this.fork_not_closed_cooldown = Config.FORK_NOT_CLOSED_COOLDOWN;
+        this.try_time_max = Config.TRY_TIME_MAX;
 
         this.games = new HashSet<>();
-        games.add(new Game("СSGO"));
+        games.add(new Game("CSGO"));
         games.add(new Game("DOTA2"));
 
         this.markets = new HashSet<>();
         markets.add(new Market("MatchWinner"));
-    }
-    public Settings(User user, int balance_percent, Set<Game> games, Set<Market> markets, int forks_live_time_max, int forks_live_time_min) {
-        this.user = user;
-        this.balance_percent = balance_percent;
-        this.games = games;
-        this.markets = markets;
-        this.forks_live_time_max = forks_live_time_max;
-        this.forks_live_time_min = forks_live_time_min;
     }
 
     public long getId() { return id; }
@@ -79,9 +84,17 @@ public class Settings {
         });
         return gamesArr;
     }
+    //public Set<Game> getGames() { return games; }
     public void setGames(Set<Game> games) { this.games = games;}
 
-    public Set<Market> getMarkets() { return markets; }
+    public ArrayList<String> getMarkets() {
+        ArrayList<String> marketsArr = new ArrayList<>();
+        markets.forEach(market -> {
+            marketsArr.add(market.getMarket().toString());
+        });
+        return marketsArr;
+    }
+    //public Set<Market> getMarkets() { return markets; }
     public void setMarkets(Set<Market> markets) { this.markets = markets; }
 
     public int getForks_live_time_max() { return forks_live_time_max; }
@@ -89,4 +102,25 @@ public class Settings {
 
     public int getForks_live_time_min() { return forks_live_time_min; }
     public void setForks_live_time_min(int forks_live_time_min) { this.forks_live_time_min = forks_live_time_min; }
+
+    public int getFork_profit_percent_min() { return fork_profit_percent_min; }
+    public void setFork_profit_percent_min(int fork_profit_percent_min) { this.fork_profit_percent_min = fork_profit_percent_min; }
+
+    public int getFork_profit_percent_max() { return fork_profit_percent_max; }
+    public void setFork_profit_percent_max(int fork_profit_percent_max) { this.fork_profit_percent_max = fork_profit_percent_max; }
+
+    public int getFork_done_try_cooldown() { return fork_done_try_cooldown; }
+    public void setFork_done_try_cooldown(int fork_done_try_cooldown) { this.fork_done_try_cooldown = fork_done_try_cooldown; }
+
+    public int getFork_cancel_try_cooldown() { return fork_cancel_try_cooldown; }
+    public void setFork_cancel_try_cooldown(int fork_cancel_try_cooldown) { this.fork_cancel_try_cooldown = fork_cancel_try_cooldown; }
+
+    public int getFork_second_bet_timeout() { return fork_second_bet_timeout; }
+    public void setFork_second_bet_timeout(int fork_second_bet_timeout) { this.fork_second_bet_timeout = fork_second_bet_timeout; }
+
+    public int getFork_not_closed_cooldown() { return fork_not_closed_cooldown; }
+    public void setFork_not_closed_cooldown(int fork_not_closed_cooldown) { this.fork_not_closed_cooldown = fork_not_closed_cooldown; }
+
+    public int getTry_time_max() { return try_time_max; }
+    public void setTry_time_max(int try_time_max) { this.try_time_max = try_time_max; }
 }

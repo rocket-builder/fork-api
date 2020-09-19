@@ -44,10 +44,7 @@ public class User {
         this.token = Security.MD5(login + password);
         this.is_banned = false;
 
-        this.settings = new Settings(
-                this,
-                Config.BALANCE_PERCENT
-        );
+        this.settings = new Settings(this);
     }
 
     public User(String login, String password, Date subscribe_end_date, Role role) {
@@ -59,10 +56,7 @@ public class User {
         this.token = Security.MD5(login + password);
         this.is_banned = false;
 
-        this.settings = new Settings(
-                this,
-                Config.BALANCE_PERCENT
-        );
+        this.settings = new Settings(this);
     }
 
     public long getId() { return id; }

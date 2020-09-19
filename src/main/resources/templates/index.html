@@ -11,8 +11,8 @@
 <button onclick="login()">login</button>
 <button onclick="logout()">logout</button>
 <button onclick="getAllBk()"> get all bk</button>
-<button onclick="addBk('parimatch', 'www.parimatch.com')">add bk</button>
-<button onclick="addBkAcc('www.parimatch.com')">add bk acc</button>
+<button onclick="addBk('ggbet', 'https://ggbet.ru')">add bk</button>
+<button onclick="addBkAcc('https://ggbet.ru')">add bk acc</button>
 <button onclick="setSettings()">setSettings</button>
 
 <button onclick="setBkAccBalance(6, 20000)">set bk acc balance</button>
@@ -21,10 +21,52 @@
 <button onclick="getBetsSingle()">get single bk account bets</button>
 <button onclick="addFork()">add fork</button>
 <button onclick="getStats()">getStats</button>
+<button onclick="addUser()">addUser</button>
+<button onclick="getUser()">getUser</button>
 
 </body>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script>
+    function getUser() {
+        $.ajax({
+            type: "GET",
+            url: "/get.user",
+            data: {
+                token: "token228",
+                id: 4
+            },
+            success: function(response) {
+                console.log(response);
+                console.log($.parseJSON(response));
+            },
+            error: function(response) {
+                console.log('ERROR: ' + response);
+                console.log($.parseJSON(response));
+            }
+        });
+    }
+    function addUser() {
+        $.ajax({
+            type: "POST",
+            url: "/add.user",
+            data: {
+                //token: "699679f38595e51ed155a181f3270c85"
+                token: "token228",
+                login: "user1",
+                password: "098f6bcd4621d373cade4e832627b4f6",
+                role: "USER",
+                subscribe_end_date: "2020-09-28"
+            },
+            success: function(response) {
+                console.log(response);
+                console.log($.parseJSON(response));
+            },
+            error: function(response) {
+                console.log('ERROR: ' + response);
+                console.log($.parseJSON(response));
+            }
+        });
+    }
     function getStats() {
         $.ajax({
             type: "GET",
@@ -175,7 +217,8 @@
             data: {
                 bkUrl: url,
                 login: "bkLogin",
-                password: "bkPassword"
+                password: "bkPassword",
+                token: "6ce4fe2a5ca21919242536fe0343b4c3"
             },
             success: function(response) {
                 console.log(response);
