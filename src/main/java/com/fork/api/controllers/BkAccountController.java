@@ -54,7 +54,7 @@ public class BkAccountController {
                 throw new UserNotFoundException();
     }
 
-    @PostMapping("/get.bkAccount")
+    @GetMapping("/get.bkAccount")
     public ResponseEntity<BkAccount> addBkAccount(
             @RequestParam String token,
             @RequestParam long bk_account_id
