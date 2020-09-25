@@ -4,17 +4,6 @@
  > bot token is user token  
  > api host: https://cors-anywhere.herokuapp.com/fork-api.herokuapp.com/
  
- ## authorization
- ### login
- > create user session on server side
- * method: POST
- * params: login(string), password(string)
- * result: user(object)
- ### logout
- > invalidate user session on server side
- * method: POST
- * params: none
- * result: ok(string)
  ## user
  ### get.user
  > access only for admin and user owner
