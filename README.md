@@ -41,7 +41,8 @@
  * content type: application/json, charset=utf-8
  * params: token(string)
  * data:  
- forks_live_time(int), fork_profit_percent_min(int), fork_profit_percent_max(int),  
+ forks_live_time(int),  
+ fork_profit_percent_min(int), fork_profit_percent_max(int),  
  fork_done_try_cooldown(int), fork_cancel_try_cooldown(int),  
  fork_second_bet_timeout(int),  
  fork_not_closed_cooldown(int),  
@@ -114,21 +115,21 @@
  ### add.fork
  > only for user fork bot  
  * method: POST
- * params: 
-  token(string), 
+ * params:   
+  token(string),   
   left_bk_account_id(long),   
   left_match_title(string),   
   left_team(string),   
   left_coefficient(float),   
-  left_bet_sum(float),  
-  left_bet_date('YYYY-mm-dd' formatted string with date),  
-  
-  right_bk_account_id(long),  
-  right_match_title(string),  
-  right_team(string),  
-  right_coefficient(float),  
-  right_bet_sum(float),  
-  right_bet_date('YYYY-mm-dd' formatted string with date),  
+  left_bet_sum(float),   
+  left_bet_date('YYYY-mm-dd' formatted string with date),   
+     
+  right_bk_account_id(long),   
+  right_match_title(string),   
+  right_team(string),   
+  right_coefficient(float),   
+  right_bet_sum(float),   
+  right_bet_date('YYYY-mm-dd' formatted string with date),   
  * result: fork(object)  
  ### user.getForks
  > get all forks from user account
