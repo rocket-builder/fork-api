@@ -124,12 +124,12 @@
   left_bet_sum(float),   
   left_bet_date('YYYY-mm-dd' formatted string with date),   
      
-right_bk_account_id(long),   
-right_match_title(string),   
-right_team(string),   
-right_coefficient(float),   
-right_bet_sum(float),   
-right_bet_date('YYYY-mm-dd' formatted string with date),   
+   right_bk_account_id(long),   
+   right_match_title(string),   
+   right_team(string),   
+   right_coefficient(float),   
+   right_bet_sum(float),   
+   right_bet_date('YYYY-mm-dd' formatted string with date)   
  * result: fork(object)  
  ### user.getForks
  > get all forks from user account
