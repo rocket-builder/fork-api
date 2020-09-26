@@ -10,7 +10,7 @@ import java.util.Set;
 
 
 @Entity
-@JsonIgnoreProperties({ "user", "balance_percent" })
+@JsonIgnoreProperties({ "user", "id" })
 public class Settings {
 
     @Id
@@ -20,13 +20,14 @@ public class Settings {
     @OneToOne(mappedBy = "settings")
     private User user;
 
-    private int balance_percent;
     private int forks_live_time_max, forks_live_time_min,
                 fork_profit_percent_min, fork_profit_percent_max,
                 fork_done_try_cooldown, fork_cancel_try_cooldown,
                 fork_second_bet_timeout,
                 fork_not_closed_cooldown,
-                try_time_max;
+                try_time_max,
+                rounding,
+                bet_sum_min, bet_sum_max;
 
     @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
@@ -48,7 +49,6 @@ public class Settings {
     public Settings() {}
     public Settings(User user) {
         this.user = user;
-        this.balance_percent = Config.BALANCE_PERCENT;
 
         this.forks_live_time_max = Config.FORKS_LIVE_TIME_MAX;
         this.forks_live_time_min = Config.FORKS_LIVE_TIME_MIN;
@@ -59,6 +59,9 @@ public class Settings {
         this.fork_second_bet_timeout = Config.FORK_SECOND_BET_TIMEOUT;
         this.fork_not_closed_cooldown = Config.FORK_NOT_CLOSED_COOLDOWN;
         this.try_time_max = Config.TRY_TIME_MAX;
+        this.rounding = Config.ROUNDING;
+        this.bet_sum_min = Config.BET_SUM_MIN;
+        this.bet_sum_max = Config.BET_SUM_MAX;
 
         this.games = new HashSet<>();
         games.add(new Game("CSGO"));
@@ -74,9 +77,6 @@ public class Settings {
     public User getUser() { return user; }
     public void setUser(User user) { this.user = user; }
 
-    public int getBalance_percent() { return balance_percent; }
-    public void setBalance_percent(int balance_percent) { this.balance_percent = balance_percent; }
-
     public ArrayList<String> getGames() {
         ArrayList<String> gamesArr = new ArrayList<>();
         games.forEach(game -> {
@@ -84,7 +84,6 @@ public class Settings {
         });
         return gamesArr;
     }
-    //public Set<Game> getGames() { return games; }
     public void setGames(Set<Game> games) { this.games = games;}
 
     public ArrayList<String> getMarkets() {
@@ -94,7 +93,6 @@ public class Settings {
         });
         return marketsArr;
     }
-    //public Set<Market> getMarkets() { return markets; }
     public void setMarkets(Set<Market> markets) { this.markets = markets; }
 
     public int getForks_live_time_max() { return forks_live_time_max; }
@@ -123,4 +121,13 @@ public class Settings {
 
     public int getTry_time_max() { return try_time_max; }
     public void setTry_time_max(int try_time_max) { this.try_time_max = try_time_max; }
+
+    public int getRounding() { return rounding; }
+    public void setRounding(int rounding) { this.rounding = rounding; }
+
+    public int getBet_sum_min() { return bet_sum_min; }
+    public void setBet_sum_min(int bet_sum_min) { this.bet_sum_min = bet_sum_min; }
+
+    public int getBet_sum_max() { return bet_sum_max; }
+    public void setBet_sum_max(int bet_sum_max) { this.bet_sum_max = bet_sum_max; }
 }
