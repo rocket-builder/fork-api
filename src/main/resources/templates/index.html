@@ -286,21 +286,25 @@
     function setSettings() {
         $.ajax({
             type: "POST",
-            url: "/user.setSettings?token="+"token228",
+            url: "/user.setSettings?token="+"df5e2d986b2c4bb7184f2c0261a816ca",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({
-                balance_percent: 10,
-                forks_live_time_max: 10,
-                forks_live_time_min: 3,
-                games: [
-                    "CSGO",
-                    "DOTA2",
-                    "LoL"
-                ],
-                markets: [
-                    "MatchWinner",
-                    "MatchKillsTotal"
-                ]}
+                    balance_percent: 10,
+                    forks_live_time_max: 10,
+                    forks_live_time_min: 3,
+                    games: [
+                        "CSGO",
+                        "DOTA2",
+                        "LoL"
+                    ],
+                    markets: [
+                        "MatchWinner",
+                        "MatchKillsTotal"
+                    ],
+                    rounding: 10,
+                    bet_sum_min: 300,
+                    bet_sum_max: 10000
+                }
             ),
             success: function(response) {
                 console.log(response);

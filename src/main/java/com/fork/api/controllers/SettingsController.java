@@ -24,7 +24,6 @@ public class SettingsController {
 
     @RequestMapping(value = "/user.setSettings", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> setSettings(
-            //add new settings in future
             @RequestParam String token,
             @RequestBody Settings settings
     ) {

@@ -17,8 +17,7 @@ public class BkAccSettings {
     private BkAccount account;
 
     private String bkMirror;
-    private int rounding;
-    private int bet_sum_min, bet_sum_max;
+
     private int cf_min, cf_max;
 
     public BkAccSettings(){}
@@ -26,9 +25,6 @@ public class BkAccSettings {
         this.account = account;
 
         this.bkMirror = "";
-        this.rounding = Config.ROUNDING;
-        this.bet_sum_min = Config.BET_SUM_MIN;
-        this.bet_sum_max = Config.BET_SUM_MAX;
         this.cf_min = Config.CF_MIN;
         this.cf_max = Config.CF_MAX;
     }
@@ -41,15 +37,6 @@ public class BkAccSettings {
 
     public String getBkMirror() { return bkMirror; }
     public void setBkMirror(String bkMirror) { this.bkMirror = bkMirror; }
-
-    public int getRounding() { return rounding; }
-    public void setRounding(int rounding) { this.rounding = rounding; }
-
-    public int getBet_sum_min() { return bet_sum_min; }
-    public void setBet_sum_min(int bet_sum_min) { this.bet_sum_min = bet_sum_min; }
-
-    public int getBet_sum_max() { return bet_sum_max; }
-    public void setBet_sum_max(int bet_sum_max) { this.bet_sum_max = bet_sum_max; }
 
     public int getCf_min() { return cf_min; }
     public void setCf_min(int cf_min) { this.cf_min = cf_min; }

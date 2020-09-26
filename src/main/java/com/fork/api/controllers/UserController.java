@@ -131,7 +131,7 @@ public class UserController {
     public ResponseEntity<String> unbanUser(
             @RequestParam String token,
             @RequestParam long user_id
-    ) throws ParseException {
+    ) {
 
         User userAdmin = userRepos.findByToken(token);
         if(userAdmin != null && userAdmin.getRole().equals(Role.ADMIN)) {
