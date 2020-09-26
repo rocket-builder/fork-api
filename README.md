@@ -42,11 +42,12 @@
  * content type: application/json, charset=utf-8
  * params: token(string)
  * data:  
- balance_percent(int), forks_live_time(int), fork_profit_percent_min(int), fork_profit_percent_max(int),  
+ forks_live_time(int), fork_profit_percent_min(int), fork_profit_percent_max(int),  
  fork_done_try_cooldown(int), fork_cancel_try_cooldown(int),  
  fork_second_bet_timeout(int),  
  fork_not_closed_cooldown(int),  
- try_time_max(int), games(string array), markets(string array)  
+ try_time_max(int), games(string array), markets(string array),
+ rounding(int), bet_sum_min(int), bet_sum_max(int)
  * result: user(object)
  ## bookmaker
  ### get.bookmaker
@@ -95,7 +96,7 @@
  * method: POST
  * content type: application/json, charset=utf-8
  * params: token(string), bk_account_id(long)
- * data: bkMirror(string), rounding(int), bet_sum_min(int), bet_sum_max(int), cf_min(int), cf_max(int)
+ * data: bkMirror(string), cf_min(int), cf_max(int)
  * result: user(object)
  ## bet
  > get bets from all bk accounts from token owner user
