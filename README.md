@@ -45,8 +45,11 @@
  fork_done_try_cooldown(int), fork_cancel_try_cooldown(int),  
  fork_second_bet_timeout(int),  
  fork_not_closed_cooldown(int),  
- try_time_max(int), games(string array), markets(string array),
- rounding(int), bet_sum_min(int), bet_sum_max(int)
+ try_time_max(int),  
+ games(string array),  
+ markets(string array),  
+ rounding(int),  
+ bet_sum_min(int), bet_sum_max(int)
  * result: user(object)
  ## bookmaker
  ### get.bookmaker
