@@ -37,7 +37,6 @@
  * result: ok(string)
  ### user.setSettings
  > access only for user profile owner
- > balance_percent is percent from balance who will use in every bet placement
  * method: POST
  * content type: application/json, charset=utf-8
  * params: token(string)
