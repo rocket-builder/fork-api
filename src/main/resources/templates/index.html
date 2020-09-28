@@ -24,7 +24,8 @@
 <button onclick="addUser()">addUser</button>
 <button onclick="getUser()">getUser</button>
 
-<button onclick="delBkAcc(56)">del bk acc</button>
+<button onclick="delBkAcc(107)">del bk acc</button>
+<button onclick="delUser(97)">del user</button>
 
 </body>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
@@ -34,8 +35,8 @@
             type: "GET",
             url: "/get.user",
             data: {
-                token: "token228",
-                id: 4
+                token: "c0e024d9200b5705bc4804722636378a",
+                id: 97
             },
             success: function(response) {
                 console.log(response);
@@ -127,15 +128,15 @@
             type: "POST",
             url: "/add.fork",
             data: {
-                token: "699679f38595e51ed155a181f3270c85",
-                left_bk_account_id: 6,
+                token: "b695ea133721bc5d2c3a55ef1408ecce",
+                left_bk_account_id: 107,
                 left_match_title: "some dota or cs match",
                 left_team: "left team",
                 left_coefficient: 2,
                 left_bet_sum: 1000,
                 left_bet_date: "2020-09-03",
 
-                right_bk_account_id: 82,
+                right_bk_account_id: 107,
                 right_match_title: "some dota or cs match",
                 right_team: "right team",
                 right_coefficient: 7,
@@ -238,7 +239,25 @@
             url: "/user.deleteBkAccount",
             data: {
                 bk_account_id: accID,
-                token: "df5e2d986b2c4bb7184f2c0261a816ca"
+                token: "b695ea133721bc5d2c3a55ef1408ecce"
+            },
+            success: function(response) {
+                console.log(response);
+                console.log($.parseJSON(response));
+            },
+            error: function(response) {
+                console.log('ERROR: ' + response);
+                console.log($.parseJSON(response));
+            }
+        });
+    }
+    function delUser(id) {
+        $.ajax({
+            type: "POST",
+            url: "/delete.user",
+            data: {
+                user_id: id,
+                token: "c0e024d9200b5705bc4804722636378a"
             },
             success: function(response) {
                 console.log(response);
