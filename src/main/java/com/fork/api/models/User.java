@@ -22,11 +22,10 @@ public class User {
     @JoinColumn(name = "settings_id", referencedColumnName = "id")
     private Settings settings;
 
-    @OneToMany(mappedBy="user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
     private Set<BkAccount> bk_accounts;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
     private Set<Fork> forks;
 
     private String login, password, token;
