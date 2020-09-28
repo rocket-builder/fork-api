@@ -13,7 +13,7 @@ public class Bookmaker {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @OneToMany(mappedBy="bookmaker")
+    @OneToMany(mappedBy="bookmaker", cascade = CascadeType.ALL)
     private Set<BkAccount> accounts;
 
     private String title, link;

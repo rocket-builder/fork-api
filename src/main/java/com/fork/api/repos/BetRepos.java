@@ -6,5 +6,4 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface BetRepos extends CrudRepository<Bet, Long> {
 
-
 }

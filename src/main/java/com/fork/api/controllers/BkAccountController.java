@@ -5,6 +5,7 @@ import com.fork.api.models.BkAccSettings;
 import com.fork.api.models.BkAccount;
 import com.fork.api.models.Bookmaker;
 import com.fork.api.models.User;
+import com.fork.api.repos.BetRepos;
 import com.fork.api.repos.BkAccountRepos;
 import com.fork.api.repos.BookmakerRepos;
 import com.fork.api.repos.UserRepos;
@@ -25,6 +26,8 @@ public class BkAccountController {
     BookmakerRepos bookmakerRepos;
     @Autowired
     BkAccountRepos bkAccountRepos;
+    @Autowired
+    BetRepos betRepos;
 
     @PostMapping("/user.addBkAccount")
     public ResponseEntity<BkAccount> addBkAccount(

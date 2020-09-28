@@ -24,6 +24,8 @@
 <button onclick="addUser()">addUser</button>
 <button onclick="getUser()">getUser</button>
 
+<button onclick="delBkAcc(56)">del bk acc</button>
+
 </body>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script>
@@ -219,6 +221,24 @@
                 login: "bkLogin",
                 password: "bkPassword",
                 token: "6ce4fe2a5ca21919242536fe0343b4c3"
+            },
+            success: function(response) {
+                console.log(response);
+                console.log($.parseJSON(response));
+            },
+            error: function(response) {
+                console.log('ERROR: ' + response);
+                console.log($.parseJSON(response));
+            }
+        });
+    }
+    function delBkAcc(accID) {
+        $.ajax({
+            type: "POST",
+            url: "/user.deleteBkAccount",
+            data: {
+                bk_account_id: accID,
+                token: "df5e2d986b2c4bb7184f2c0261a816ca"
             },
             success: function(response) {
                 console.log(response);
