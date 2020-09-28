@@ -26,7 +26,7 @@ public class BkAccount {
     @JoinColumn(name="bookmaker_id", nullable=false)
     private Bookmaker bookmaker;
 
-    @OneToMany(mappedBy="bk_account")
+    @OneToMany(mappedBy="bk_account", cascade = CascadeType.ALL)
     private Set<Bet> bets;
 
     private String login, password;
