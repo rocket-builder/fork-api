@@ -6,12 +6,10 @@ public enum EMarket {
     MatchRoundWinner,
     MatchKillsTotal,
     MatchKillsHandicap,
-    MatchTotalOfSets,
     MatchMapsTotal,
     MatchRaceOfRounds,
     MatchRoundsTotal,
     MatchRoundsHandicap,
-    MatchLegsHandicap,
 
     MapWinner,
     MapRaceOfRounds,
@@ -21,10 +19,5 @@ public enum EMarket {
     MapRoundWinner,
     MapRaceOfKills,
     MapKillsTotal,
-    MapKillsHandicap,
-
-    SetWinner,
-    SetLegsTotal,
-    SetLegWinner,
-    SetLegsHandicap
+    MapKillsHandicap
 }
