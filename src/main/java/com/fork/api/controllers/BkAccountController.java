@@ -132,6 +132,32 @@ public class BkAccountController {
             throw new InvalidTokenException();
     }
 
+    @PostMapping("/user.setBkAccountActive")
+    public ResponseEntity<User> bkAccountSetActive(
+            @RequestParam String token,
+            @RequestParam long bk_account_id,
+            @RequestParam boolean isActive
+    ) {
+        User userByToken = userRepos.findByToken(token);
+        if(userByToken != null) {
+
+            BkAccount bkAccount = bkAccountRepos.findById(bk_account_id);
+            if(bkAccount != null) {
+
+                if(userByToken.getBk_accounts().contains(bkAccount)) {
+
+                    bkAccount.setActive(isActive);
+                    bkAccountRepos.save(bkAccount);
+
+                    return new ResponseEntity<>(userByToken, HttpStatus.OK);
+                } else
+                    throw new AccessDeniedException();
+            } else
+                throw new BkAccountNotFoundException();
+        } else
+            throw new InvalidTokenException();
+    }
+
     @RequestMapping(value = "/user.setBkAccountSettings", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> bkAccountSetSettings(
             @RequestParam String token,
