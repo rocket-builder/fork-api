@@ -94,6 +94,11 @@
  * method: POST
  * params: token(string), bk_account_id(long), balance(float)
  * result: user(object)
+ ### user.setBkAccountActive
+  > only for frontent 
+ * method: POST
+ * params: token(string), bk_account_id(long), isActive(boolean)
+ * result: user(object)
  ### user.setBkAccountSettings
  > only for user fork bot  
  * method: POST
