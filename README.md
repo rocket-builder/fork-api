@@ -95,7 +95,7 @@
  * params: token(string), bk_account_id(long), balance(float)
  * result: user(object)
  ### user.setBkAccountActive
-  > only for frontent 
+  > only for frontend
  * method: POST
  * params: token(string), bk_account_id(long), isActive(boolean)
  * result: user(object)
