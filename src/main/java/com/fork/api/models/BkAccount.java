@@ -29,6 +29,9 @@ public class BkAccount {
     @OneToMany(mappedBy="bk_account", cascade = CascadeType.ALL)
     private Set<Bet> bets;
 
+    @Column(columnDefinition = "boolean default true")
+    private boolean isActive;
+
     private String login, password;
     private float balance;
 
@@ -39,6 +42,7 @@ public class BkAccount {
         this.login = login;
         this.password = password;
         this.balance = 0;
+        this.isActive = true;
 
         this.bets = new HashSet<>();
 
@@ -68,4 +72,7 @@ public class BkAccount {
 
     public BkAccSettings getSettings() { return settings; }
     public void setSettings(BkAccSettings settings) { this.settings = settings; }
+
+    public boolean isActive() { return isActive; }
+    public void setActive(boolean active) { isActive = active; }
 }
