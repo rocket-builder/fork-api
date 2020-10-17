@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @RestController
 public class BkAccountController {
@@ -73,6 +74,23 @@ public class BkAccountController {
                     return new ResponseEntity<>(bkAccount, HttpStatus.OK);
                 } else
                     throw new AccessDeniedException();
+            } else
+                throw new BkAccountNotFoundException();
+        } else
+            throw new InvalidTokenException();
+    }
+
+    @GetMapping("/user.getActiveBkAccounts")
+    public ResponseEntity<List<BkAccount>> getActiveBkAccounts(
+            @RequestParam String token
+    ) {
+        User userByToken = userRepos.findByToken(token);
+        if(userByToken != null) {
+
+            List<BkAccount> bkAccounts = bkAccountRepos.findAllByIsActiveAndUser(true, userByToken);
+            if(!bkAccounts.isEmpty()) {
+
+                return new ResponseEntity<>(bkAccounts, HttpStatus.OK);
             } else
                 throw new BkAccountNotFoundException();
         } else
