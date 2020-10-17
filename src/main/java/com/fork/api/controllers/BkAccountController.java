@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @RestController
 public class BkAccountController {
@@ -79,6 +80,23 @@ public class BkAccountController {
             throw new InvalidTokenException();
     }
 
+    @GetMapping("/user.getActiveBkAccounts")
+    public ResponseEntity<List<BkAccount>> getActiveBkAccounts(
+            @RequestParam String token
+    ) {
+        User userByToken = userRepos.findByToken(token);
+        if(userByToken != null) {
+
+            List<BkAccount> bkAccounts = bkAccountRepos.findAllByIsActiveAndUser(true, userByToken);
+            if(!bkAccounts.isEmpty()) {
+
+                return new ResponseEntity<>(bkAccounts, HttpStatus.OK);
+            } else
+                throw new BkAccountNotFoundException();
+        } else
+            throw new InvalidTokenException();
+    }
+
     @PostMapping("/user.deleteBkAccount")
     public ResponseEntity<String> deleteBkAccount(
             @RequestParam long bk_account_id,
@@ -124,6 +142,32 @@ public class BkAccountController {
                         return new ResponseEntity<>(userByToken, HttpStatus.OK);
                     } else
                         throw new NegativeBalanceException();
+                } else
+                    throw new AccessDeniedException();
+            } else
+                throw new BkAccountNotFoundException();
+        } else
+            throw new InvalidTokenException();
+    }
+
+    @PostMapping("/user.setBkAccountActive")
+    public ResponseEntity<User> bkAccountSetActive(
+            @RequestParam String token,
+            @RequestParam long bk_account_id,
+            @RequestParam boolean isActive
+    ) {
+        User userByToken = userRepos.findByToken(token);
+        if(userByToken != null) {
+
+            BkAccount bkAccount = bkAccountRepos.findById(bk_account_id);
+            if(bkAccount != null) {
+
+                if(userByToken.getBk_accounts().contains(bkAccount)) {
+
+                    bkAccount.setActive(isActive);
+                    bkAccountRepos.save(bkAccount);
+
+                    return new ResponseEntity<>(userByToken, HttpStatus.OK);
                 } else
                     throw new AccessDeniedException();
             } else

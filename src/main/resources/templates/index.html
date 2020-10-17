@@ -23,6 +23,8 @@
 <button onclick="getStats()">getStats</button>
 <button onclick="addUser()">addUser</button>
 <button onclick="getUser()">getUser</button>
+<button onclick="setActive()">setActive</button>
+<button onclick="getActive()">getActive</button>
 
 <button onclick="delBkAcc(107)">del bk acc</button>
 <button onclick="delUser(97)">del user</button>
@@ -30,6 +32,42 @@
 </body>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script>
+    function getActive() {
+        $.ajax({
+            type: "GET",
+            url: "/user.getActiveBkAccounts",
+            data: {
+                token: "c040e68c4d44c8f8c48746bca89c1b21"
+            },
+            success: function(response) {
+                console.log(response);
+                console.log($.parseJSON(response));
+            },
+            error: function(response) {
+                console.log('ERROR: ' + response);
+                console.log($.parseJSON(response));
+            }
+        });
+    }
+    function setActive() {
+        $.ajax({
+            type: "POST",
+            url: "/user.setBkAccountActive",
+            data: {
+                token: "c040e68c4d44c8f8c48746bca89c1b21",
+                bk_account_id: 220,
+                isActive: false
+            },
+            success: function(response) {
+                console.log(response);
+                console.log($.parseJSON(response));
+            },
+            error: function(response) {
+                console.log('ERROR: ' + response);
+                console.log($.parseJSON(response));
+            }
+        });
+    }
     function getUser() {
         $.ajax({
             type: "GET",
@@ -54,9 +92,9 @@
             url: "/add.user",
             data: {
                 //token: "699679f38595e51ed155a181f3270c85"
-                token: "token228",
-                login: "user1",
-                password: "098f6bcd4621d373cade4e832627b4f6",
+                token: "c040e68c4d44c8f8c48746bca89c1b21",
+                login: "user",
+                password: "ee11cbb19052e40b07aac0ca060c23ee",
                 role: "USER",
                 subscribe_end_date: "2020-09-28"
             },
