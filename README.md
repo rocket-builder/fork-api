@@ -10,6 +10,11 @@
  * method: GET
  * params: id(long), token(string)
  * result: user(object)
+ ### get.userWithActiveBkAccounts
+ > access only for admin and user owner, get user with active bk accounts
+ * method: GET
+ * params: id(long), token(string)
+ * result: user(object)
  ### get.users
  > access only for admin
  * method: GET
