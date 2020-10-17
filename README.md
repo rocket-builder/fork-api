@@ -79,6 +79,11 @@
  * method: GET
  * params: token(string), bk_account_id(long)
  * result: bkAccount(object)
+ ### user.getActiveBkAccounts
+ > get all bk accs when IsActive is true
+ * method: GET
+ * params: token(string)
+ * result: Array of bkAccount(object)
  ### user.addBkAccount
  > access only for user profile owner
  * method: POST
