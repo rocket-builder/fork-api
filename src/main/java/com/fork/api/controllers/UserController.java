@@ -91,6 +91,32 @@ public class UserController {
             throw new UserNotFoundException();
     }
 
+    @GetMapping("/get.userWithActiveBkAccounts")
+    public ResponseEntity<User> getUserWithActiveBkAccountsById(
+            @RequestParam(value = "id") long id,
+            @RequestParam(value = "token") String token
+    ) {
+        User user = userRepos.findById(id);
+        if(user != null) {
+
+            User userByToken = userRepos.findByToken(token);
+            if(
+                    user.equals(userByToken) ||
+                            (
+                                    userByToken != null &&
+                                            userByToken.getRole().equals(Role.ADMIN)
+                            )
+            ) {
+
+                user.setBk_accounts(bkAccountRepos.findAllByIsActiveAndUser(true, user));
+
+                return new ResponseEntity<>(user, HttpStatus.OK);
+            } else
+                throw new InvalidTokenException();
+        } else
+            throw new UserNotFoundException();
+    }
+
     @GetMapping("/get.users")
     public ResponseEntity<List<User>> getUsers(
             @RequestParam(value = "token") String token
