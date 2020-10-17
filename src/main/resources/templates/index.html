@@ -23,6 +23,7 @@
 <button onclick="getStats()">getStats</button>
 <button onclick="addUser()">addUser</button>
 <button onclick="getUser()">getUser</button>
+<button onclick="getUserWithActiveAccs()">getUserWithActiveAccs</button>
 <button onclick="setActive()">setActive</button>
 <button onclick="getActive()">getActive</button>
 
@@ -74,7 +75,25 @@
             url: "/get.user",
             data: {
                 token: "c0e024d9200b5705bc4804722636378a",
-                id: 97
+                id: 112
+            },
+            success: function(response) {
+                console.log(response);
+                console.log($.parseJSON(response));
+            },
+            error: function(response) {
+                console.log('ERROR: ' + response);
+                console.log($.parseJSON(response));
+            }
+        });
+    }
+    function getUserWithActiveAccs() {
+        $.ajax({
+            type: "GET",
+            url: "/get.userWithActiveBkAccounts",
+            data: {
+                token: "c0e024d9200b5705bc4804722636378a",
+                id: 112
             },
             success: function(response) {
                 console.log(response);
