@@ -12,7 +12,7 @@ public class Config {
     TRY_TIME_MAX = 10;
 
     //Single BK account default settings
-    public static final int ROUNDING = 10,
+    public static final int ROUNDING = 0,
     BET_SUM_MIN = 0, BET_SUM_MAX = 5000,
     CF_MIN = 0, CF_MAX = 20;
 }
