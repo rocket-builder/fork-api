@@ -30,11 +30,21 @@ public class Fork {
 
     public Fork(){}
     public Fork(Bet betLeft, Bet betRight) {
-        this.profit =
-                Math.abs(
-                (betLeft.getSum() * betLeft.getCoefficient()) -
-                        (betRight.getSum() * betRight.getCoefficient())
-                );
+        if(!betLeft.isSuccess() && !betRight.isSuccess()){
+            this.profit = 0;
+        } else {
+            if(betLeft.isSuccess() && !betRight.isSuccess()){
+                this.profit = -betLeft.getSum();
+            } else if(betRight.isSuccess() && !betLeft.isSuccess()){
+                this.profit = -betRight.getSum();
+            } else {
+                this.profit =
+                        Math.abs(
+                                (betLeft.getSum() * betLeft.getCoefficient()) - (betRight.getSum() * betRight.getCoefficient())
+                        );
+            }
+        }
+
         this.fork_date = betLeft.getDate();
 
         this.leftBkTitle = betLeft.getBkAccount().getBookmaker().getTitle();

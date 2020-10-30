@@ -29,7 +29,6 @@ public class Profit {
         Date today = new Date((new java.util.Date()).getTime());
 
         forks.forEach(fork -> {
-
             if(
                     fork.getFork_date().getDay() == today.getDay() &&
                     fork.getFork_date().getMonth() == today.getMonth() &&

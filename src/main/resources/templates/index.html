@@ -185,20 +185,22 @@
             type: "POST",
             url: "/add.fork",
             data: {
-                token: "b695ea133721bc5d2c3a55ef1408ecce",
-                left_bk_account_id: 107,
+                token: "c040e68c4d44c8f8c48746bca89c1b21",
+                left_bk_account_id: 142,
                 left_match_title: "some dota or cs match",
                 left_team: "left team",
-                left_coefficient: 2,
-                left_bet_sum: 1000,
+                left_coefficient: 2.3,
+                left_bet_sum: 10000,
                 left_bet_date: "2020-09-03",
+                left_is_success: true,
 
-                right_bk_account_id: 107,
+                right_bk_account_id: 144,
                 right_match_title: "some dota or cs match",
                 right_team: "right team",
-                right_coefficient: 7,
-                right_bet_sum: 1000,
-                right_bet_date: "2020-09-03"
+                right_coefficient: 2.8,
+                right_bet_sum: 12000,
+                right_bet_date: "2020-09-03",
+                right_is_success: true
             },
             success: function(response) {
                 console.log(response);
