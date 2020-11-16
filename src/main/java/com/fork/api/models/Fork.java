@@ -1,6 +1,7 @@
 package com.fork.api.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.apache.commons.math3.util.Precision;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -38,11 +39,8 @@ public class Fork {
             } else if(betRight.isSuccess() && !betLeft.isSuccess()){
                 this.profit = -betRight.getSum();
             } else {
-                this.profit =
-                        Math.round(
-                        Math.abs(
-                                (betLeft.getSum() * betLeft.getCoefficient()) - (betRight.getSum() * betRight.getCoefficient())
-                        ));
+                float rowProfit = Math.abs((betLeft.getSum() * betLeft.getCoefficient()) - (betRight.getSum() * betRight.getCoefficient()));
+                this.profit = Precision.round(rowProfit, 2);
             }
         }
 
