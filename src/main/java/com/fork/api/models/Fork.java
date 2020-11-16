@@ -39,9 +39,10 @@ public class Fork {
                 this.profit = -betRight.getSum();
             } else {
                 this.profit =
+                        Math.round(
                         Math.abs(
                                 (betLeft.getSum() * betLeft.getCoefficient()) - (betRight.getSum() * betRight.getCoefficient())
-                        );
+                        ));
             }
         }
 

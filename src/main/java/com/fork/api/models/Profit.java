@@ -29,13 +29,20 @@ public class Profit {
         Date today = new Date((new java.util.Date()).getTime());
 
         forks.forEach(fork -> {
+            Date forkDate = fork.getFork_date();
             if(
                     fork.getFork_date().getDay() == today.getDay() &&
                     fork.getFork_date().getMonth() == today.getMonth() &&
                     fork.getFork_date().getYear() == today.getYear()
-            ) this.day += fork.getProfit();
-            if(isDateInCurrentWeek(fork.getFork_date())) this.week += fork.getProfit();
-            if(fork.getFork_date().getMonth() == today.getMonth()) this.month += fork.getProfit();
+            ) {
+                this.day += fork.getProfit();
+            }
+            if(isDateInCurrentWeek(fork.getFork_date())) {
+                this.week += fork.getProfit();
+            }
+            if(fork.getFork_date().getMonth() == today.getMonth()) {
+                this.month += fork.getProfit();
+            }
         });
     }
 
