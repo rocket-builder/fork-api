@@ -21,7 +21,7 @@ public class Fork {
     @JoinColumn(name="user_id", nullable=false)
     private User user;
 
-    private float profit;
+    private double profit;
     private Date fork_date;
     private String leftBkTitle, rightBkTitle;
     private String leftTeamTitle, rightTeamTitle;
@@ -39,8 +39,10 @@ public class Fork {
             } else if(betRight.isSuccess() && !betLeft.isSuccess()){
                 this.profit = -betRight.getSum();
             } else {
-                float rowProfit = Math.abs((betLeft.getSum() * betLeft.getCoefficient()) - (betRight.getSum() * betRight.getCoefficient()));
-                this.profit = Precision.round(rowProfit, 2);
+                double bank = betLeft.getSum() + betRight.getSum();
+                double leftProfit = (betLeft.getSum() * betLeft.getCoefficient()) - bank;
+                double rightProfit = (betRight.getSum() * betRight.getCoefficient()) - bank;
+                this.profit = Math.floor((leftProfit + rightProfit) / 2);
             }
         }
 
@@ -65,7 +67,7 @@ public class Fork {
     public long getId() { return id; }
     public void setId(long id) { this.id = id; }
 
-    public float getProfit() { return profit; }
+    public double getProfit() { return profit; }
     public void setProfit(float profit) { this.profit = profit; }
 
     public Date getFork_date() { return fork_date; }
