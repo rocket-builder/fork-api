@@ -1,14 +1,8 @@
 package com.fork.api.controllers;
 
 import com.fork.api.exceptions.*;
-import com.fork.api.models.BkAccSettings;
-import com.fork.api.models.BkAccount;
-import com.fork.api.models.Bookmaker;
-import com.fork.api.models.User;
-import com.fork.api.repos.BetRepos;
-import com.fork.api.repos.BkAccountRepos;
-import com.fork.api.repos.BookmakerRepos;
-import com.fork.api.repos.UserRepos;
+import com.fork.api.models.*;
+import com.fork.api.repos.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -30,6 +24,8 @@ public class BkAccountController {
     BkAccountRepos bkAccountRepos;
     @Autowired
     BetRepos betRepos;
+    @Autowired
+    ProfitRepos profitRepos;
 
     @PostMapping("/user.addBkAccount")
     public ResponseEntity<BkAccount> addBkAccount(
@@ -125,7 +121,7 @@ public class BkAccountController {
     public ResponseEntity<User> bkAccountSetBalance(
             @RequestParam String token,
             @RequestParam long bk_account_id,
-            @RequestParam float balance
+            @RequestParam double balance
     ) {
         User userByToken = userRepos.findByToken(token);
         if(userByToken != null) {
@@ -136,6 +132,7 @@ public class BkAccountController {
                 if(userByToken.getBk_accounts().contains(bkAccount)) {
 
                     if(balance > 0) {
+                        profitRepos.save(new Profit(balance - bkAccount.getBalance(), userByToken));
 
                         bkAccount.setBalance(balance);
                         bkAccountRepos.save(bkAccount);

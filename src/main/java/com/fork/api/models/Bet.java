@@ -18,17 +18,19 @@ public class Bet {
     private BkAccount bk_account;
 
     private String match_title, team;
-    private float coefficient, bet_sum;
+    private double coefficient, bet_sum;
     private Date bet_date;
+    private boolean isSuccess;
 
     public Bet() {}
-    public Bet(BkAccount bkAccount,String match, String team, float coefficient, float sum, Date date) {
+    public Bet(BkAccount bkAccount,String match, String team, double coefficient, double sum, Date date, boolean isSuccess) {
         this.bk_account = bkAccount;
         this.match_title = match;
         this.team = team;
         this.coefficient = coefficient;
         this.bet_sum = sum;
         this.bet_date = date;
+        this.isSuccess = isSuccess;
     }
 
     public long getId() { return id; }
@@ -43,12 +45,15 @@ public class Bet {
     public String getTeam() { return team; }
     public void setTeam(String team) { this.team = team; }
 
-    public float getCoefficient() { return coefficient; }
-    public void setCoefficient(float coefficient) { this.coefficient = coefficient; }
+    public double getCoefficient() { return coefficient; }
+    public void setCoefficient(double coefficient) { this.coefficient = coefficient; }
 
-    public float getSum() { return bet_sum; }
-    public void setSum(float sum) { this.bet_sum = sum; }
+    public double getSum() { return bet_sum; }
+    public void setSum(double sum) { this.bet_sum = sum; }
 
     public Date getDate() { return bet_date; }
     public void setDate(Date date) { this.bet_date = date; }
+
+    public boolean isSuccess() { return isSuccess; }
+    public void setSuccess(boolean success) { isSuccess = success; }
 }

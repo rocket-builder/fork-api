@@ -44,13 +44,15 @@ public class ForkController {
             @RequestParam float left_coefficient,
             @RequestParam float left_bet_sum,
             @RequestParam String left_bet_date,
+            @RequestParam boolean left_is_success,
 
             @RequestParam long right_bk_account_id,
             @RequestParam String right_match_title,
             @RequestParam String right_team,
             @RequestParam float right_coefficient,
             @RequestParam float right_bet_sum,
-            @RequestParam String right_bet_date
+            @RequestParam String right_bet_date,
+            @RequestParam boolean right_is_success
     ) throws ParseException {
 
         User userByToken = userRepos.findByToken(token);
@@ -61,23 +63,23 @@ public class ForkController {
 
             if(leftBkAccount == null || rightBkAccount == null) throw new BkAccountNotFoundException();
             if (leftBkAccount.getUser().equals(userByToken) && rightBkAccount.getUser().equals(userByToken)) {
-
                 Bet betLeft = new Bet(
                         leftBkAccount,
                         left_match_title,
                         left_team,
                         left_coefficient,
                         left_bet_sum,
-                        new SimpleDateFormat("yyyy-MM-dd").parse(left_bet_date)
+                        new SimpleDateFormat("yyyy-MM-dd").parse(left_bet_date),
+                        left_is_success
                 );
-
                 Bet betRight = new Bet(
                         rightBkAccount,
                         right_match_title,
                         right_team,
                         right_coefficient,
                         right_bet_sum,
-                        new SimpleDateFormat("yyyy-MM-dd").parse(right_bet_date)
+                        new SimpleDateFormat("yyyy-MM-dd").parse(right_bet_date),
+                        right_is_success
                 );
 
                 betRepos.save(betLeft);

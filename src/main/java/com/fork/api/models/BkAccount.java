@@ -33,7 +33,7 @@ public class BkAccount {
     private boolean isActive;
 
     private String login, password;
-    private float balance;
+    private double balance;
 
     public BkAccount() {}
     public BkAccount(User user, Bookmaker bookmaker, String login, String password) {
@@ -64,8 +64,8 @@ public class BkAccount {
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
 
-    public float getBalance() { return balance; }
-    public void setBalance(float balance) { this.balance = balance; }
+    public double getBalance() { return balance; }
+    public void setBalance(double balance) { this.balance = balance; }
 
     public Set<Bet> getBets() { return bets; }
     public void setBets(Set<Bet> bets) { this.bets = bets; }

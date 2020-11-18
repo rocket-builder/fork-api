@@ -1,6 +1,7 @@
 package com.fork.api.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.apache.commons.math3.util.Precision;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class Fork {
     @JoinColumn(name="user_id", nullable=false)
     private User user;
 
-    private float profit;
+    private double profit;
     private Date fork_date;
     private String leftBkTitle, rightBkTitle;
     private String leftTeamTitle, rightTeamTitle;
@@ -30,11 +31,21 @@ public class Fork {
 
     public Fork(){}
     public Fork(Bet betLeft, Bet betRight) {
-        this.profit =
-                Math.abs(
-                (betLeft.getSum() * betLeft.getCoefficient()) -
-                        (betRight.getSum() * betRight.getCoefficient())
-                );
+        if(!betLeft.isSuccess() && !betRight.isSuccess()){
+            this.profit = 0;
+        } else {
+            if(betLeft.isSuccess() && !betRight.isSuccess()){
+                this.profit = -betLeft.getSum();
+            } else if(betRight.isSuccess() && !betLeft.isSuccess()){
+                this.profit = -betRight.getSum();
+            } else {
+                double bank = betLeft.getSum() + betRight.getSum();
+                double leftProfit = (betLeft.getSum() * betLeft.getCoefficient()) - bank;
+                double rightProfit = (betRight.getSum() * betRight.getCoefficient()) - bank;
+                this.profit = Math.floor((leftProfit + rightProfit) / 2);
+            }
+        }
+
         this.fork_date = betLeft.getDate();
 
         this.leftBkTitle = betLeft.getBkAccount().getBookmaker().getTitle();
@@ -56,7 +67,7 @@ public class Fork {
     public long getId() { return id; }
     public void setId(long id) { this.id = id; }
 
-    public float getProfit() { return profit; }
+    public double getProfit() { return profit; }
     public void setProfit(float profit) { this.profit = profit; }
 
     public Date getFork_date() { return fork_date; }
