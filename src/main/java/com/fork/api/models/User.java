@@ -28,6 +28,9 @@ public class User {
     @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
     private Set<Fork> forks;
 
+    @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
+    private Set<Profit> profits;
+
     private String login, password, token;
     private Date signup_date, subscribe_end_date;
     private Role role;
@@ -90,4 +93,7 @@ public class User {
 
     public Set<Fork> getForks() { return forks; }
     public void setForks(Set<Fork> forks) { this.forks = forks; }
+
+    public Set<Profit> getProfits() { return profits; }
+    public void setProfits(Set<Profit> profits) { this.profits = profits; }
 }

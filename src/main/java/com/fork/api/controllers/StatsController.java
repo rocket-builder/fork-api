@@ -4,9 +4,10 @@ import com.fork.api.enums.Role;
 import com.fork.api.exceptions.AccessDeniedException;
 import com.fork.api.exceptions.InvalidTokenException;
 import com.fork.api.exceptions.UserNotFoundException;
-import com.fork.api.models.Profit;
+import com.fork.api.models.Statistic;
 import com.fork.api.models.User;
 import com.fork.api.repos.ForkRepos;
+import com.fork.api.repos.ProfitRepos;
 import com.fork.api.repos.UserRepos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,10 +25,10 @@ public class StatsController {
     @Autowired
     UserRepos userRepos;
     @Autowired
-    ForkRepos forkRepos;
+    ProfitRepos profitRepos;
 
     @GetMapping("/get.users.stats")
-    public ResponseEntity<Profit> getAllStats(
+    public ResponseEntity<Statistic> getAllStats(
             @RequestParam String token
     ){
         User userByToken = userRepos.findByToken(token);
@@ -35,16 +36,16 @@ public class StatsController {
             if(userByToken.getRole().equals(Role.ADMIN)) {
 
                 List<User> users = userRepos.findAll();
-                Profit profit = new Profit();
+                Statistic statistic = new Statistic();
 
                 users.forEach(user -> {
-                    Profit profitUser = new Profit(forkRepos.findAllByUser(user), user);
-                    profit.setDay(profit.getDay() + profitUser.getDay());
-                    profit.setWeek(profit.getWeek() + profitUser.getWeek());
-                    profit.setMonth(profit.getMonth() + profitUser.getMonth());
+                    Statistic profitUser = new Statistic(profitRepos.findAllByUser(user), user);
+                    statistic.setDay(statistic.getDay().add(profitUser.getDay()));
+                    statistic.setWeek(statistic.getWeek().add(profitUser.getWeek()));
+                    statistic.setMonth(statistic.getMonth().add(profitUser.getMonth()));
                 });
 
-                return new ResponseEntity<>(profit, HttpStatus.OK);
+                return new ResponseEntity<>(statistic, HttpStatus.OK);
             } else
                 throw new AccessDeniedException();
         } else
@@ -52,7 +53,7 @@ public class StatsController {
     }
 
     @GetMapping("/get.users.statsList")
-    public ResponseEntity<List<Profit>> getAllStatsList(
+    public ResponseEntity<List<Statistic>> getAllStatsList(
             @RequestParam String token
     ){
         User userByToken = userRepos.findByToken(token);
@@ -60,13 +61,13 @@ public class StatsController {
             if(userByToken.getRole().equals(Role.ADMIN)) {
 
                 List<User> users = userRepos.findAll();
-                List<Profit> profits = new ArrayList<>();
+                List<Statistic> stats = new ArrayList<>();
 
                 users.forEach(user -> {
-                    profits.add(new Profit(forkRepos.findAllByUser(user), user));
+                    stats.add(new Statistic(profitRepos.findAllByUser(user), user));
                 });
 
-                return new ResponseEntity<>(profits, HttpStatus.OK);
+                return new ResponseEntity<>(stats, HttpStatus.OK);
             } else
                 throw new AccessDeniedException();
         } else
@@ -74,7 +75,7 @@ public class StatsController {
     }
 
     @GetMapping("/get.user.stats")
-    public ResponseEntity<Profit> getSingleStats(
+    public ResponseEntity<Statistic> getSingleStats(
             @RequestParam String token,
             @RequestParam long id
     ){
@@ -86,8 +87,8 @@ public class StatsController {
                 if(user != null) {
 
 
-                    Profit profit = new Profit(forkRepos.findAllByUser(user), user);
-                    return new ResponseEntity<>(profit, HttpStatus.OK);
+                    Statistic statistic = new Statistic(profitRepos.findAllByUser(user), user);
+                    return new ResponseEntity<>(statistic, HttpStatus.OK);
                 } else
                     throw new UserNotFoundException();
             } else
@@ -97,15 +98,15 @@ public class StatsController {
     }
 
     @GetMapping("/user.getStats")
-    public ResponseEntity<Profit> getStats(
+    public ResponseEntity<Statistic> getStats(
             @RequestParam String token
     ){
         User userByToken = userRepos.findByToken(token);
         if (userByToken != null) {
 
-            Profit profit = new Profit(forkRepos.findAllByUser(userByToken), userByToken);
+            Statistic statistic = new Statistic(profitRepos.findAllByUser(userByToken), userByToken);
 
-            return new ResponseEntity<>(profit, HttpStatus.OK);
+            return new ResponseEntity<>(statistic, HttpStatus.OK);
         } else
             throw new InvalidTokenException();
     }

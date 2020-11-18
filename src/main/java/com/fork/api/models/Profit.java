@@ -1,71 +1,42 @@
 package com.fork.api.models;
 
-import com.fork.api.repos.ForkRepos;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
-import java.util.Calendar;
 
+@Entity
+@JsonIgnoreProperties({"user"})
 public class Profit {
 
-    private String userLogin;
-    private float day;
-    private float week;
-    private float month;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
-    public Profit(){
-        this.userLogin = "";
-        this.day = 0;
-        this.week = 0;
-        this.month = 0;
-    }
-    public Profit(List<Fork> forks, User user){
-        this.userLogin = user.getLogin();
-        this.day = 0;
-        this.week = 0;
-        this.month = 0;
+    @ManyToOne
+    @JoinColumn(name="user_id", nullable=false)
+    private User user;
 
-        Date today = new Date((new java.util.Date()).getTime());
+    private BigDecimal money;
+    private Date date;
 
-        forks.forEach(fork -> {
-            Date forkDate = fork.getFork_date();
-            if(
-                    fork.getFork_date().getDay() == today.getDay() &&
-                    fork.getFork_date().getMonth() == today.getMonth() &&
-                    fork.getFork_date().getYear() == today.getYear()
-            ) {
-                this.day += fork.getProfit();
-            }
-            if(isDateInCurrentWeek(fork.getFork_date())) {
-                this.week += fork.getProfit();
-            }
-            if(fork.getFork_date().getMonth() == today.getMonth()) {
-                this.month += fork.getProfit();
-            }
-        });
+    public Profit(){}
+    public Profit(double money, User user) {
+        this.user = user;
+        this.money = BigDecimal.valueOf(money);
+        this.date = new Date((new java.util.Date()).getTime());
     }
 
-    private boolean isDateInCurrentWeek(Date date) {
-        Calendar currentCalendar = Calendar.getInstance();
-        int week = currentCalendar.get(Calendar.WEEK_OF_YEAR);
-        int year = currentCalendar.get(Calendar.YEAR);
-        Calendar targetCalendar = Calendar.getInstance();
-        targetCalendar.setTime(date);
-        int targetWeek = targetCalendar.get(Calendar.WEEK_OF_YEAR);
-        int targetYear = targetCalendar.get(Calendar.YEAR);
-        return week == targetWeek && year == targetYear;
-    }
+    public long getId() { return id; }
+    public void setId(long id) { this.id = id; }
 
-    public float getDay() { return day; }
-    public void setDay(float day) { this.day = day; }
+    public BigDecimal getMoney() { return money; }
+    public void setMoney(BigDecimal money) { this.money = money; }
 
-    public float getWeek() { return week; }
-    public void setWeek(float week) { this.week = week; }
+    public Date getDate() { return date; }
+    public void setDate(Date date) { this.date = date; }
 
-    public float getMonth() { return month; }
-    public void setMonth(float month) { this.month = month; }
-
-    public String getUserLogin() { return userLogin; }
-    public void setUserLogin(String userLogin) { this.userLogin = userLogin; }
+    public User getUser() { return user; }
+    public void setUser(User user) { this.user = user; }
 }

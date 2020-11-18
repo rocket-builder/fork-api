@@ -15,7 +15,7 @@
 <button onclick="addBkAcc('https://ggbet.ru')">add bk acc</button>
 <button onclick="setSettings()">setSettings</button>
 
-<button onclick="setBkAccBalance(6, 20000)">set bk acc balance</button>
+<button onclick="setBkAccBalance(142, 1500.2)">set bk acc balance</button>
 <button onclick="addBet()">addBet</button>
 <button onclick="getBets()">get all bets</button>
 <button onclick="getBetsSingle()">get single bk account bets</button>
@@ -258,7 +258,7 @@
             type: "POST",
             url: "/user.setBkAccountBalance",
             data: {
-                token: "699679f38595e51ed155a181f3270c85",
+                token: "c040e68c4d44c8f8c48746bca89c1b21",
                 bk_account_id: acc_id,
                 balance: balance
             },
