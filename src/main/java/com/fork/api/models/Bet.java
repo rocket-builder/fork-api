@@ -17,16 +17,17 @@ public class Bet {
     @JoinColumn(name="bk_account_id", nullable=false)
     private BkAccount bk_account;
 
-    private String match_title, team;
+    private String match_title, team, market;
     private double coefficient, bet_sum;
     private Date bet_date;
     private boolean isSuccess;
 
     public Bet() {}
-    public Bet(BkAccount bkAccount,String match, String team, double coefficient, double sum, Date date, boolean isSuccess) {
+    public Bet(BkAccount bkAccount, String match, String team, String market, double coefficient, double sum, Date date, boolean isSuccess) {
         this.bk_account = bkAccount;
         this.match_title = match;
         this.team = team;
+        this.market = market;
         this.coefficient = coefficient;
         this.bet_sum = sum;
         this.bet_date = date;
@@ -44,6 +45,9 @@ public class Bet {
 
     public String getTeam() { return team; }
     public void setTeam(String team) { this.team = team; }
+
+    public String getMarket() { return market; }
+    public void setMarket(String market) { this.market = market; }
 
     public double getCoefficient() { return coefficient; }
     public void setCoefficient(double coefficient) { this.coefficient = coefficient; }

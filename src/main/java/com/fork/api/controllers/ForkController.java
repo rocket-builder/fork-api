@@ -41,6 +41,7 @@ public class ForkController {
             @RequestParam long left_bk_account_id,
             @RequestParam String left_match_title,
             @RequestParam String left_team,
+            @RequestParam String left_market,
             @RequestParam float left_coefficient,
             @RequestParam float left_bet_sum,
             @RequestParam String left_bet_date,
@@ -49,6 +50,7 @@ public class ForkController {
             @RequestParam long right_bk_account_id,
             @RequestParam String right_match_title,
             @RequestParam String right_team,
+            @RequestParam String right_market,
             @RequestParam float right_coefficient,
             @RequestParam float right_bet_sum,
             @RequestParam String right_bet_date,
@@ -67,18 +69,20 @@ public class ForkController {
                         leftBkAccount,
                         left_match_title,
                         left_team,
+                        left_market,
                         left_coefficient,
                         left_bet_sum,
-                        new SimpleDateFormat("yyyy-MM-dd").parse(left_bet_date),
+                        new SimpleDateFormat("dd.MM.yyyy hh:mm").parse(left_bet_date),
                         left_is_success
                 );
                 Bet betRight = new Bet(
                         rightBkAccount,
                         right_match_title,
                         right_team,
+                        right_market,
                         right_coefficient,
                         right_bet_sum,
-                        new SimpleDateFormat("yyyy-MM-dd").parse(right_bet_date),
+                        new SimpleDateFormat("dd.MM.yyyy hh:mm").parse(right_bet_date),
                         right_is_success
                 );
 
