@@ -21,8 +21,11 @@ public class Fork {
     @JoinColumn(name="user_id", nullable=false)
     private User user;
 
-    private double profit;
+    private double leftProfit;
+    private double rightProfit;
+
     private Date fork_date;
+    private String leftMarket, rightMarket;
     private String leftBkTitle, rightBkTitle;
     private String leftTeamTitle, rightTeamTitle;
     private String leftBkAccLogin, rightBkAccLogin;
@@ -32,21 +35,24 @@ public class Fork {
     public Fork(){}
     public Fork(Bet betLeft, Bet betRight) {
         if(!betLeft.isSuccess() && !betRight.isSuccess()){
-            this.profit = 0;
+            this.leftProfit = 0;
+            this.rightProfit = 0;
         } else {
             if(betLeft.isSuccess() && !betRight.isSuccess()){
-                this.profit = -betLeft.getSum();
+                this.leftProfit = -betLeft.getSum();
             } else if(betRight.isSuccess() && !betLeft.isSuccess()){
-                this.profit = -betRight.getSum();
+                this.rightProfit = -betRight.getSum();
             } else {
                 double bank = betLeft.getSum() + betRight.getSum();
-                double leftProfit = (betLeft.getSum() * betLeft.getCoefficient()) - bank;
-                double rightProfit = (betRight.getSum() * betRight.getCoefficient()) - bank;
-                this.profit = Math.floor((leftProfit + rightProfit) / 2);
+                this.leftProfit = Math.floor((betLeft.getSum() * betLeft.getCoefficient()) - bank);
+                this.rightProfit = Math.floor((betRight.getSum() * betRight.getCoefficient()) - bank);
             }
         }
 
         this.fork_date = betLeft.getDate();
+
+        this.leftMarket = betLeft.getMarket();
+        this.rightMarket = betRight.getMarket();
 
         this.leftBkTitle = betLeft.getBkAccount().getBookmaker().getTitle();
         this.rightBkTitle = betRight.getBkAccount().getBookmaker().getTitle();
@@ -67,8 +73,11 @@ public class Fork {
     public long getId() { return id; }
     public void setId(long id) { this.id = id; }
 
-    public double getProfit() { return profit; }
-    public void setProfit(float profit) { this.profit = profit; }
+    public double getLeftProfit() { return leftProfit; }
+    public void setLeftProfit(double leftProfit) { this.leftProfit = leftProfit; }
+
+    public double getRightProfit() { return rightProfit; }
+    public void setRightProfit(double rightProfit) { this.rightProfit = rightProfit; }
 
     public Date getFork_date() { return fork_date; }
     public void setFork_date(Date fork_date) { this.fork_date = fork_date; }
@@ -96,6 +105,12 @@ public class Fork {
 
     public String getMatchTitle() { return matchTitle; }
     public void setMatchTitle(String matchTitle) { this.matchTitle = matchTitle; }
+
+    public String getLeftMarket() { return leftMarket; }
+    public void setLeftMarket(String leftMarket) { this.leftMarket = leftMarket; }
+
+    public String getRightMarket() { return rightMarket; }
+    public void setRightMarket(String rightMarket) { this.rightMarket = rightMarket; }
 
     public String getLeftBkAccLogin() { return leftBkAccLogin; }
     public void setLeftBkAccLogin(String leftBkAccLogin) { this.leftBkAccLogin = leftBkAccLogin; }
