@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.Set;
 
 @Entity
-@JsonIgnoreProperties({ "forks" })
+@JsonIgnoreProperties({ "forks", "profits" })
 public class User {
 
     @Id
