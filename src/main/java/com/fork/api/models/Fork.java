@@ -39,8 +39,10 @@ public class Fork {
             this.rightProfit = 0;
         } else {
             if(betLeft.isSuccess() && !betRight.isSuccess()){
+                this.rightProfit = (betLeft.getSum() * betLeft.getCoefficient()) - betLeft.getSum();
                 this.leftProfit = -betLeft.getSum();
             } else if(betRight.isSuccess() && !betLeft.isSuccess()){
+                this.leftProfit = (betRight.getSum() * betRight.getCoefficient()) - betRight.getSum();
                 this.rightProfit = -betRight.getSum();
             } else {
                 double bank = betLeft.getSum() + betRight.getSum();
