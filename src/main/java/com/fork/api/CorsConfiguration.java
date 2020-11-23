@@ -13,8 +13,10 @@ public class CorsConfiguration
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/rest/v2//**").allowedMethods("POST", "GET");
+                registry.addMapping("/**");
             }
         };
     }
 }
+
+
