@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -55,13 +57,16 @@ public class ForkController {
             @RequestParam float right_bet_sum,
             @RequestParam String right_bet_date,
             @RequestParam boolean right_is_success
-    ) throws ParseException {
+    ) throws ParseException, UnsupportedEncodingException {
 
         User userByToken = userRepos.findByToken(token);
         if (userByToken != null) {
 
             BkAccount leftBkAccount = bkAccountRepos.findById(left_bk_account_id);
             BkAccount rightBkAccount = bkAccountRepos.findById(right_bk_account_id);
+
+            left_market = new String(left_market.getBytes("windows-1251"), StandardCharsets.UTF_8);
+            right_market = new String(right_market.getBytes("windows-1251"), StandardCharsets.UTF_8);
 
             if(leftBkAccount == null || rightBkAccount == null) throw new BkAccountNotFoundException();
             if (leftBkAccount.getUser().equals(userByToken) && rightBkAccount.getUser().equals(userByToken)) {
