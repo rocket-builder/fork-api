@@ -57,16 +57,13 @@ public class ForkController {
             @RequestParam float right_bet_sum,
             @RequestParam String right_bet_date,
             @RequestParam boolean right_is_success
-    ) throws ParseException, UnsupportedEncodingException {
+    ) throws ParseException {
 
         User userByToken = userRepos.findByToken(token);
         if (userByToken != null) {
 
             BkAccount leftBkAccount = bkAccountRepos.findById(left_bk_account_id);
             BkAccount rightBkAccount = bkAccountRepos.findById(right_bk_account_id);
-
-            left_market = new String(left_market.getBytes("windows-1251"), StandardCharsets.UTF_8);
-            right_market = new String(right_market.getBytes("windows-1251"), StandardCharsets.UTF_8);
 
             if(leftBkAccount == null || rightBkAccount == null) throw new BkAccountNotFoundException();
             if (leftBkAccount.getUser().equals(userByToken) && rightBkAccount.getUser().equals(userByToken)) {
