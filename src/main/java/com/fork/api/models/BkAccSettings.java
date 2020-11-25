@@ -20,6 +20,8 @@ public class BkAccSettings {
     private String bkMirror;
 
     private double cf_min, cf_max;
+
+    @ColumnDefault("10")
     private int cf_live_time;
 
     public BkAccSettings(){}

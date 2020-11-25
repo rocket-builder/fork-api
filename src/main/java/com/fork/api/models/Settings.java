@@ -2,6 +2,7 @@ package com.fork.api.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fork.api.Config;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public class Settings {
                 rounding,
                 bet_sum_min, bet_sum_max;
 
+    @ColumnDefault("0")
     private boolean if_timeout_close_fork;
 
     @ManyToMany(cascade = { CascadeType.ALL })
