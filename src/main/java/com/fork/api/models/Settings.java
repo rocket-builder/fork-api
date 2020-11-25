@@ -2,6 +2,7 @@ package com.fork.api.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fork.api.Config;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -28,6 +29,9 @@ public class Settings {
                 try_time_max,
                 rounding,
                 bet_sum_min, bet_sum_max;
+
+    @ColumnDefault("0")
+    private boolean if_timeout_close_fork;
 
     @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
@@ -62,6 +66,7 @@ public class Settings {
         this.rounding = Config.ROUNDING;
         this.bet_sum_min = Config.BET_SUM_MIN;
         this.bet_sum_max = Config.BET_SUM_MAX;
+        this.if_timeout_close_fork = Config.IF_TIMEOUT_CLOSE_FORKS;
 
         this.games = new HashSet<>();
         games.add(new Game("CSGO"));
@@ -130,4 +135,7 @@ public class Settings {
 
     public int getBet_sum_max() { return bet_sum_max; }
     public void setBet_sum_max(int bet_sum_max) { this.bet_sum_max = bet_sum_max; }
+
+    public boolean isIf_timeout_close_fork() { return if_timeout_close_fork; }
+    public void setIf_timeout_close_fork(boolean if_timeout_close_fork) { this.if_timeout_close_fork = if_timeout_close_fork; }
 }

@@ -10,6 +10,7 @@ public class Config {
     FORK_SECOND_BET_TIMEOUT = 120,
     FORK_NOT_CLOSED_COOLDOWN = 30,
     TRY_TIME_MAX = 10;
+    public static final boolean IF_TIMEOUT_CLOSE_FORKS = false;
 
     //Single BK account default settings
     public static final int ROUNDING = 10,
