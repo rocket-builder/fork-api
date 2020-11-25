@@ -386,12 +386,18 @@
     function setSettings() {
         $.ajax({
             type: "POST",
-            url: "/user.setSettings?token="+"df5e2d986b2c4bb7184f2c0261a816ca",
+            url: "/user.setSettings?token="+"4f6bf30ada0d6a0074d69d1b6dbe44ef",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({
-                    balance_percent: 10,
                     forks_live_time_max: 10,
                     forks_live_time_min: 3,
+                    fork_profit_percent_min: 5,
+                    fork_profit_percent_max: 200,
+                    fork_done_try_cooldown: 30,
+                    fork_cancel_try_cooldown: 60,
+                    fork_second_bet_timeout: 120,
+                    fork_not_closed_cooldown: 120,
+                    try_time_max: 360,
                     games: [
                         "CSGO",
                         "DOTA2",
@@ -402,8 +408,8 @@
                         "MatchKillsTotal"
                     ],
                     rounding: 10,
-                    bet_sum_min: 300,
-                    bet_sum_max: 10000
+                    bet_sum_min: 200,
+                    bet_sum_max: 5000
                 }
             ),
             success: function(response) {
