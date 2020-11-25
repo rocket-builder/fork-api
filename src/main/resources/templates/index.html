@@ -399,7 +399,7 @@
                     fork_second_bet_timeout: 120,
                     fork_not_closed_cooldown: 120,
                     try_time_max: 360,
-                    //if_timeout_close_fork: false,
+                    if_timeout_close_fork: false,
                     games: [
                         "CSGO",
                         "DOTA2",
@@ -410,7 +410,7 @@
                         "MatchKillsTotal"
                     ],
                     rounding: 10,
-                    bet_sum_min: 70,
+                    bet_sum_min: 200,
                     bet_sum_max: 5000
                 }
             ),
@@ -433,7 +433,9 @@
             data: JSON.stringify({
                     cf_min: 1.8,
                     cf_max: 15.2,
-                    cf_live_time: 10
+                    cf_live_time: 10,
+                    bet_sum_min: 200,
+                    bet_sum_max: 5000
                 }
             ),
             success: function(response) {
