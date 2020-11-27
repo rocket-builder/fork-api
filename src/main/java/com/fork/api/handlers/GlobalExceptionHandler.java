@@ -69,7 +69,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiError> parseException(ParseException ex) {
 
         return new ResponseEntity<>(new ApiError(
-                400, "Incorrect request data :("
+                400, "Incorrect request data, cannot resolve " + ex.getMessage() +" :("
         ), HttpStatus.OK);
     }
 

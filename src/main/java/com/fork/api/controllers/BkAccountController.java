@@ -131,7 +131,7 @@ public class BkAccountController {
 
                 if(userByToken.getBk_accounts().contains(bkAccount)) {
 
-                    if(balance > 0) {
+                    if(balance >= 0) {
                         profitRepos.save(new Profit(balance - bkAccount.getBalance(), userByToken));
 
                         bkAccount.setBalance(balance);

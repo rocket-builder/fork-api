@@ -16,5 +16,6 @@ public class Config {
     public static final int ROUNDING = 10,
     BET_SUM_MIN = 0, BET_SUM_MAX = 5000,
     CF_MIN = 0, CF_MAX = 20,
-    CF_LIVE_TIME = 20;
+    CF_LIVE_TIME = 20,
+    PLACE_BET_RULE = 0;
 }

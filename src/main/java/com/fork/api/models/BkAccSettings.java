@@ -5,6 +5,7 @@ import com.fork.api.Config;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import java.text.ParseException;
 
 @Entity
 @JsonIgnoreProperties({ "account" })
@@ -17,21 +18,21 @@ public class BkAccSettings {
     @OneToOne(mappedBy = "settings")
     private BkAccount account;
 
-    private String bkMirror;
+    private String bkMirror = "";
 
     private double cf_min, cf_max;
 
-    @ColumnDefault("10")
-    private int cf_live_time;
+    private int cf_live_time = 0;
+    private int place_bet_rule = 0;
 
     public BkAccSettings(){}
     public BkAccSettings(BkAccount account) {
         this.account = account;
-
         this.bkMirror = "";
         this.cf_min = Config.CF_MIN;
         this.cf_max = Config.CF_MAX;
         this.cf_live_time = Config.CF_LIVE_TIME;
+        this.place_bet_rule = Config.PLACE_BET_RULE;
     }
 
     public long getId() { return id; }
@@ -51,4 +52,13 @@ public class BkAccSettings {
 
     public int getCf_live_time() { return cf_live_time; }
     public void setCf_live_time(int cf_live_time) { this.cf_live_time = cf_live_time; }
+
+    public int getPlace_bet_rule() { return place_bet_rule; }
+    public void setPlace_bet_rule(int place_bet_rule) throws ParseException {
+        if(place_bet_rule < 0 || place_bet_rule > 2){
+            throw new ParseException("place bet rule cannot be a ".concat(String.valueOf(place_bet_rule)), 0);
+        } else {
+            this.place_bet_rule = place_bet_rule;
+        }
+    }
 }

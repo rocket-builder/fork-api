@@ -428,14 +428,16 @@
     function setBkAccSettings() {
         $.ajax({
             type: "POST",
-            url: "/user.setBkAccountSettings?token="+"c040e68c4d44c8f8c48746bca89c1b21" + "&bk_account_id=" + 244,
+            url: "/user.setBkAccountSettings?token="+"4f6bf30ada0d6a0074d69d1b6dbe44ef" + "&bk_account_id=" + 1209,
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({
+
                     cf_min: 1.8,
                     cf_max: 15.2,
                     cf_live_time: 10,
                     bet_sum_min: 200,
-                    bet_sum_max: 5000
+                    bet_sum_max: 5000,
+                    place_bet_rule: 1
                 }
             ),
             success: function(response) {
